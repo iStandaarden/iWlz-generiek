@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: '0.9.3_prerelease'
+  version: '0.1.0'
 externalDocs:
   description: Find out more about OpenAPI
   url: 'https://www.openapis.org'
@@ -258,9 +258,9 @@ paths:
     post:
       tags:
         - Verwerken notificaties
-      summary: Vind indicatieID's op BSN.
+      summary: Operatie voor het ontvangen van notificaties
       description: Vind indicatieID's en indicatiedatums van verstrekte indicaties op basis van het BSN van de cliënt.
-      operationId: getWLZindicaties
+      operationId: processNotification
       parameters:
         - in: header
           name: X-orgKey
