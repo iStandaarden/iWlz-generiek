@@ -26,6 +26,8 @@ U kunt ook gebruik maken van de online viewers:
 * MrinDoc: [bekijk via deze link Netwerk koppelvlak specificatie:](https://mrin9.github.io/OpenAPI-Viewer/#/load/https%3A%2F%2Fraw.githubusercontent.com%2FiStandaarden%2FiWlz-generiek%2Fmaster%2Fapi-specificatie%2Fnetwerkpunt.yaml "https://mrin9.github.io/OpenAPI-Viewer/#/load/https%3A%2F%2Fraw.githubusercontent.com%2FiStandaarden%2FiWlz-generiek%2Fmaster%2Fapi-specificatie%2Fnetwerkpunt.yaml")
 * SwaggerUI Viewer. [bekijk via deze link Netwerk koppelvlak specificatie:](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/iStandaarden/iWlz-generiek/master/api-specificatie/netwerkpunt.yaml "https://petstore.swagger.io/?url=https://raw.githubusercontent.com/iStandaarden/iWlz-generiek/master/api-specificatie/netwerkpunt.yaml")
 
+@todo Backoffice 
+
 ## Versies
 * versie v0.1.0 initial
 
