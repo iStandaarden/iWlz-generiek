@@ -1,0 +1,308 @@
+openapi: 3.0.1
+info:
+  title: Koppelvlak backoffice
+  description: OpenAPI Koppelvlak specificatie tbv interactie met de backoffice.
+  termsOfService: 'https://github.com/OAI/OpenAPI-Specification/blob/master/LICENSE'
+  contact:
+    name: "iStandaarden"
+    url: "https://istandaarden.nl"
+    email: info@istandaarden.nl
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: '0.9.3_prerelease'
+externalDocs:
+  description: Find out more about OpenAPI
+  url: 'https://www.openapis.org'
+servers:
+  - url: 'https://api.backoffice.nl/rest'
+tags:
+  - name: Verwerken abonnementen
+    description: 'Operaties voor het verwerken van abonnementen'
+    externalDocs:
+      description: Link naar iStandaarden
+      url: 'https://informatiemodel.istandaarden.nl/'
+  - name: Verwerken notificaties
+    description: 'Operaties voor het verwerken van notificaties'
+    externalDocs:
+      description: Link naar iStandaarden
+      url: 'https://informatiemodel.istandaarden.nl/'
+paths:
+  /abonnementen/organisatie:
+    post:
+      tags:
+        - Verwerken abonnementen
+      summary: Abonneren op indicaties voor een specifieke organisatie
+      operationId: postAbonnementOrganisatie
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recordType:
+                  type: string
+                  enum: ["wlzindicatie"]
+                eventType:
+                  description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+                  type: string
+                  enum: ["all","create", "update"]
+                organisatieId:
+                  description: identificatie van de organisatie
+                  type: string
+                  minLength: 9
+                  maxLength: 9
+                organisatieIdType:
+                  description: type identificatie van de organisatie
+                  type: string
+                  enum: ["UZOVI"]
+              required:
+                - event
+                - organisatieId
+                - organisatieIdType
+      callbacks:   # Callback definition
+        notificatie:   # Event name
+          '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
+              post:
+                parameters:
+                - in: header
+                  name: X-orgKey
+                  description: Uniek ID van de organisatie binnen het netwerk
+                  schema:
+                    type: integer
+                    format: int32
+                  required: true
+                requestBody:   # Contents of the callback message
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                            timestamp:
+                                type: string
+                                format: date-time
+                            abonnementId:
+                              type: string
+                              format: uuid
+                            eventType:
+                              type: string
+                              enum: ["create", "update"]
+                            recordID:
+                              type: string
+                        required:
+                          - timestamp
+                          - abonnementId
+                          - eventType
+                          - message
+                responses:   # Expected responses to the callback message
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+      responses:
+        '201':
+          description: Abonnement aangemaakt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  abonnementId:
+                    type: string
+                    format: uuid
+  /abonnementen/persoon:
+      post:
+        tags:
+          - Verwerken abonnementen
+        summary: Abonneren op indicaties voor een specifiek persoon
+        operationId: postAbonnementPersoon
+        parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recordType:
+                    type: string
+                    enum: ["wlzindicatie"]
+                  eventType:
+                    description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+                    type: string
+                    enum: ["all","create", "update"]
+                  persoonId:
+                    description: identificatie persoon
+                    type: string
+                  persoonIdType:
+                    description: type identificatie persoon
+                    type: string
+                    enum: ["BSN"]
+                required:
+                  - event
+                  - organisatieId
+                  - persoonIdType
+        callbacks:   # Callback definition
+          notificatie:   # Event name
+            '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
+              post:
+                parameters:
+                - in: header
+                  name: X-orgKey
+                  description: Uniek ID van de organisatie binnen het netwerk
+                  schema:
+                    type: integer
+                    format: int32
+                  required: true
+                requestBody:   # Contents of the callback message
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          timestamp:
+                              type: string
+                              format: date-time
+                          abonnementId:
+                            type: string
+                            format: uuid
+                          eventType:
+                            type: string
+                            enum: ["create", "update"]
+                          recordID:
+                            type: string
+                        required:
+                          - timestamp
+                          - abonnementId
+                          - eventType
+                          - message
+                responses:   # Expected responses to the callback message
+                  '200':
+                    description: Your server returns this code if it accepts the callback
+        responses:
+          '201':
+            description: Abonnement aangemaakt
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    abonnementId:
+                      type: string
+                      format: uuid
+          '400':
+            description: Ongeldig BSN - Abonnement niet aangemaakt
+            content: {}
+  /abonnementen/{abonnementID}:
+    delete:
+      tags:
+        - Verwerken abonnementen
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
+      operationId: deleteAbonnement
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: abonnementID
+          description: Id van het abonnement dat verwijderd dient te worden
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Abonnement verwijderd
+        '404':
+          description: abonnementID niet gevonden 
+  /notificaties:
+    post:
+      tags:
+        - Verwerken notificaties
+      summary: Vind indicatieID's op BSN.
+      description: Vind indicatieID's en indicatiedatums van verstrekte indicaties op basis van het BSN van de cliënt.
+      operationId: getWLZindicaties
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
+      requestBody:
+                  required: true
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          timestamp:
+                              type: string
+                              format: date-time
+                          abonnementId:
+                            type: string
+                            format: uuid
+                          eventType:
+                            type: string
+                            enum: ["create", "update"]
+                          recordID:
+                            type: string
+                            example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
+                        required:
+                          - timestamp
+                          - abonnementId
+                          - eventType
+                          - recordID
+      responses:
+        '202':
+          description: Accepted
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
