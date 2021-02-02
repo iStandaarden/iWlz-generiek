@@ -165,36 +165,43 @@ paths:
               type: integer
               format: int32
             required: true
-          requestBody:
+          - in: header
+            name: abonnementId
+            description: abonnementID
+            schema:
+              type: string
+              format: uuid
             required: true
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    abonnementId:
-                      description: abonnementID
-                      type: string
-                      format: uuid
-                    # entiteit:
-                    #   description: naam van entiteit
-                    #   type: string
-                    # eventType:
-                    #   description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-                    #   type: string
-                    #   enum: ["all","create", "update"]
-                    # organisatieId:
-                    #   description: identificatie van de organisatie
-                    #   type: string
-                    # organisatieIdType:
-                    #   description: type identificatie van de organisatie
-                    #   type: string
-                  required:
-                    - abonnementId
-                    # - entiteit
-                    # - event
-                    # - organisatieId
-                    # - organisatieIdType
+          # requestBody:
+          #   required: true
+          #   content:
+          #     application/json:
+          #       schema:
+          #         type: object
+          #         properties:
+          #           abonnementId:
+          #             description: abonnementID
+          #             type: string
+          #             format: uuid
+          #           # entiteit:
+          #           #   description: naam van entiteit
+          #           #   type: string
+          #           # eventType:
+          #           #   description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+          #           #   type: string
+          #           #   enum: ["all","create", "update"]
+          #           # organisatieId:
+          #           #   description: identificatie van de organisatie
+          #           #   type: string
+          #           # organisatieIdType:
+          #           #   description: type identificatie van de organisatie
+          #           #   type: string
+          #         required:
+          #           - abonnementId
+          #           # - entiteit
+          #           # - event
+          #           # - organisatieId
+          #           # - organisatieIdType
           callbacks:   # Callback definition
             notificatie:   # Event name
               '{abonneeEndpoint/getData}':   # The callback URL for delivering notifications
