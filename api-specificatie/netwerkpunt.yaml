@@ -259,7 +259,7 @@ paths:
         - netwerkpunt_intern
       summary: Raadplegen eigen actuele abonnementen bij andere netwerkpartijen
       operationId: getEigenAbonnementen
-      # parameters:
+      parameters:
       # - in: header
       #   name: X-orgKey
       #   description: Uniek ID van de organisatie binnen het netwerk
@@ -267,42 +267,75 @@ paths:
       #     type: integer
       #     format: int32
       #   required: true
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                recordType:
-                  description: record beschrijving
-                  type: string
-                eventType:
-                  description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-                  type: string
-                  enum: ["all","create", "update"]
-                organisatieId:
-                  description: identificatie van de organisatie waar abonnement is aangegaan
-                  type: string
-                organisatieIdType:
-                  description: type identificatie van de organisatie
-                  type: string
-                aanmaakdatumbegin:
-                  description: kleinste datum abonnement aangegaan
-                  type: string
-                  format: date-time
-                aanmaakdatumeind:
-                  description: grootste datum abonnement aangegaan
-                  type: string
-                  format: date-time
-              required:
-                - abonnementId
-                - recordType
-                - recordID
-                - eventType
-                - organisatieId
-                - organisatieIdType
-                - aanmaakdatum
+      - in: header
+        name: recordType
+        description: record beschrijving
+        schema:
+          type: string
+      - in: header
+        name: eventType
+        description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+        schema: 
+          type: string
+          enum: ["all","create", "update"]
+      - in: header
+        name: organisatieId
+        description: identificatie van de organisatie waar abonnement is aangegaan
+        schema:
+          type: string
+      - in: header
+        name: organisatieIdType
+        description: type identificatie van de organisatie
+        schema:
+          type: string
+      - in: header
+        name: aanmaakdatumBegin
+        description: kleinste datum abonnement aangegaan
+        schema:
+          type: string
+          format: date-time
+      - in: header
+        name: aanmaakdatumEind
+        description: grootste datum abonnement aangegaan
+        schema:
+          type: string
+          format: date-time
+      # requestBody:
+      #   required: false
+      #   content:
+      #     application/json:
+      #       schema:
+      #         type: object
+      #         properties:
+      #           recordType:
+      #             description: record beschrijving
+      #             type: string
+      #           eventType:
+      #             description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+      #             type: string
+      #             enum: ["all","create", "update"]
+      #           organisatieId:
+      #             description: identificatie van de organisatie waar abonnement is aangegaan
+      #             type: string
+      #           organisatieIdType:
+      #             description: type identificatie van de organisatie
+      #             type: string
+      #           aanmaakdatumbegin:
+      #             description: kleinste datum abonnement aangegaan
+      #             type: string
+      #             format: date-time
+      #           aanmaakdatumeind:
+      #             description: grootste datum abonnement aangegaan
+      #             type: string
+      #             format: date-time
+      #         required:
+      #           - abonnementId
+      #           - recordType
+      #           - recordID
+      #           - eventType
+      #           - organisatieId
+      #           - organisatieIdType
+      #           - aanmaakdatum
       callbacks:   # Callback definition
         notificatie:   # Event name
           '{abonneeEndpoint/getData}':   # The callback URL for delivering notifications
