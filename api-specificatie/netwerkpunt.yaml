@@ -19,14 +19,14 @@ servers:
 tags:
   - name: netwerkpunt
     description: koppelvlak specificaties van Netwerkpunt naar buiten
-    externalDocs:
-      description: todo
-      url: 'todo'
+#    externalDocs:
+#      description: todo
+#      url: 'todo'
   - name: netwerkpunt_intern
     description: koppelvlak specificaties van Netwerkpunt naar backoffice (intern)
-    externalDocs:
-      description: todo
-      url: 'todo'
+#    externalDocs:
+#      description: todo
+#      url: 'todo'
 paths:
   /netwerkpunt/{abonnementID}:
     delete:
