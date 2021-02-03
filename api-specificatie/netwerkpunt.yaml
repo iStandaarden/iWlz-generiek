@@ -150,7 +150,7 @@ paths:
     post:
       tags:
         - netwerkpunt
-      summary: Raadplegen data record bij andere netwerkpartijen
+      summary: Zendnotificatie naar andere netwerkpartijen
       operationId: zendNotificatie
       parameters:
       - in: header
@@ -183,23 +183,17 @@ paths:
                 - abonnementId
                 - eventType
                 - message
-          responses:   # Expected responses to the callback message
-              '200':
-              description: Your server returns this code if it accepts the callback
       responses:
-          '201':
-            description: Abonnement aangemaakt
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    abonnementId:
-                      type: string
-                      format: uuid
-          '400':
-            description: Ongeldig BSN - Abonnement niet aangemaakt
-            content: {}
+        '202':
+          description: notificatie ontvangen
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  abonnementId:
+                    type: string
+                    format: uuid
   /netwerkpunt_intern/eigenAbonnementen:
     get:
       tags:
@@ -248,7 +242,7 @@ paths:
           type: string
           format: date-time
       responses:
-        '201':
+        '200':
           description: verzoek ontvangen
           content:
             application/json:
