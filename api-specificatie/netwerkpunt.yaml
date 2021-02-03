@@ -262,34 +262,34 @@ paths:
       #     type: integer
       #     format: int32
       #   required: true
-      - in: header
+      - in: query
         name: recordType
         description: record beschrijving
         schema:
           type: string
-      - in: header
+      - in: query
         name: eventType
         description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
         schema: 
           type: string
           enum: ["all","create", "update"]
-      - in: header
+      - in: query
         name: organisatieId
         description: identificatie van de organisatie waar abonnement is aangegaan
         schema:
           type: string
-      - in: header
+      - in: query
         name: organisatieIdType
         description: type identificatie van de organisatie
         schema:
           type: string
-      - in: header
+      - in: query
         name: aanmaakdatumBegin
         description: kleinste datum abonnement aangegaan
         schema:
           type: string
           format: date-time
-      - in: header
+      - in: query
         name: aanmaakdatumEind
         description: grootste datum abonnement aangegaan
         schema:
