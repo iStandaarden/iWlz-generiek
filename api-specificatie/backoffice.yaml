@@ -19,14 +19,14 @@ servers:
 tags:
   - name: Verwerken abonnementen
     description: 'Operaties voor het verwerken van abonnementen'
-    externalDocs:
-      description: Link naar iStandaarden
-      url: 'https://informatiemodel.istandaarden.nl/'
+#    externalDocs:
+#      description: todo
+#      url: 'todo'
   - name: Verwerken notificaties
     description: 'Operaties voor het verwerken van notificaties'
-    externalDocs:
-      description: Link naar iStandaarden
-      url: 'https://informatiemodel.istandaarden.nl/'
+#    externalDocs:
+#      description: todo
+#      url: 'todo'
 paths:
   /abonnementen/organisatie:
     post:
