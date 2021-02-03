@@ -55,12 +55,12 @@ paths:
           description: Abonnement verwijderd
         '404':
           description: abonnementID niet gevonden 
-  /netwerkpunt/abonnementEntiteit:
+  /netwerkpunt/abonnementRecord:
       post:
         tags:
           - netwerkpunt
-        summary: Abonneren op een specifiek entiteit
-        operationId: postAbonnementEntiteit
+        summary: Abonneren op een specifiek record
+        operationId: postAbonnementRecord
         parameters:
         - in: header
           name: X-orgKey
@@ -76,7 +76,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  entiteit:
+                  record:
                     description: naam van entiteit # of entiteitID?
                     type: string
                   eventType:
@@ -90,7 +90,7 @@ paths:
                     description: type identificatie van de organisatie
                     type: string
                 required:
-                  - entiteit
+                  - record
                   - event
                   - organisatieId
                   - organisatieIdType
@@ -144,14 +144,14 @@ paths:
                       type: string
                       format: uuid
           '400':
-            description: Ongeldig Entiteit - Abonnement niet aangemaakt
+            description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /netwerkpunt/raadpleegdataEntiteit:
+  /netwerkpunt/raadpleegdataRecord:
         get:
           tags:
             - netwerkpunt
-          summary: BRaadplegen data entiteit bij andere netwerkpartijen
-          operationId: getDataAbonnementEntiteit
+          summary: Raadplegen data record bij andere netwerkpartijen
+          operationId: getDataAbonnementRecord
           parameters:
           - in: header
             name: X-orgKey
