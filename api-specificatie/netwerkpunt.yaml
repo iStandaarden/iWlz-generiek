@@ -220,6 +220,10 @@ paths:
               content: {}
   /netwerkpunt/zendNotificatie:
     post:
+      tags:
+        - netwerkpunt
+      summary: Raadplegen data record bij andere netwerkpartijen
+      operationId: zendNotificatie
       parameters:
       - in: header
         name: X-orgKey
