@@ -235,7 +235,7 @@ paths:
                     '200':
                       description: Your server returns this code if it accepts the callback
           responses:
-            '201':
+            '200':
               description: verzoek ontvangen
               content:
                 application/json:
