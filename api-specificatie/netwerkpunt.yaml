@@ -403,42 +403,6 @@ paths:
         schema:
           type: string
           format: date-time
-      # requestBody:
-      #   required: false
-      #   content:
-      #     application/json:
-      #       schema:
-      #         type: object
-      #         properties:
-      #           recordType:
-      #             description: record beschrijving
-      #             type: string
-      #           eventType:
-      #             description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-      #             type: string
-      #             enum: ["all","create", "update"]
-      #           organisatieId:
-      #             description: identificatie van de organisatie waar abonnement is aangegaan
-      #             type: string
-      #           organisatieIdType:
-      #             description: type identificatie van de organisatie
-      #             type: string
-      #           aanmaakdatumbegin:
-      #             description: kleinste datum abonnement aangegaan
-      #             type: string
-      #             format: date-time
-      #           aanmaakdatumeind:
-      #             description: grootste datum abonnement aangegaan
-      #             type: string
-      #             format: date-time
-      #         required:
-      #           - abonnementId
-      #           - recordType
-      #           - recordID
-      #           - eventType
-      #           - organisatieId
-      #           - organisatieIdType
-      #           - aanmaakdatum
       responses:
         '200':
           description: verzoek ontvangen
