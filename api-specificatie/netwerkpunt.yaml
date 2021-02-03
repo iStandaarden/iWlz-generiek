@@ -17,11 +17,6 @@ externalDocs:
 servers:
   - url: 'https://www.mijnnetwerkpunt.nl'
 tags:
-  - name: iWlz
-    description: 'Alles over iWlz'
-    externalDocs:
-      description: Link naar iStandaarden
-      url: 'https://informatiemodel.istandaarden.nl/'
   - name: netwerkpunt
     description: koppelvlak specificaties van Netwerkpunt naar buiten
     externalDocs:
