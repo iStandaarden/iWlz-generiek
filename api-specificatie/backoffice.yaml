@@ -201,7 +201,7 @@ paths:
         - Verwerken volgindicaties
       summary: Verwijder een volgindicatie
       description: 'Operatie voor het verwijderen van een eerder geplaatste volgindicatie'
-      operationId: deleteAbonnement
+      operationId: deleteVolgindicatie
       parameters:
         - in: header
           name: X-orgKey
