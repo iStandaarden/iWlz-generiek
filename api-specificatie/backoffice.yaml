@@ -17,8 +17,8 @@ externalDocs:
 servers:
   - url: 'https://api.backoffice.nl/rest'
 tags:
-  - name: Verwerken abonnementen
-    description: 'Operaties voor het verwerken van abonnementen'
+  - name: Verwerken volgindicaties
+    description: 'Operaties voor het verwerken van volgindicaties'
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
@@ -28,12 +28,12 @@ tags:
 #      description: todo
 #      url: 'todo'
 paths:
-  /abonnementen/abonnementRecord:
+  /volgindicaties/record:
       post:
         tags:
-          - Verwerken abonnementen
-        summary: Abonneren op een specifiek record
-        operationId: postAbonnementRecord
+          - Verwerken volgindicaties
+        summary: Volgindicatie plaatsen op een specifiek record
+        operationId: postVolgindicatieRecord
         parameters:
         - in: header
           name: X-orgKey
@@ -49,27 +49,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  record:
-                    description: naam van entiteit # of entiteitID?
-                    type: string
-                  eventType:
-                    description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-                    type: string
-                    enum: ["all","create", "update"]
-                  organisatieId:
-                    description: identificatie van de organisatie
-                    type: string
-                  organisatieIdType:
-                    description: type identificatie van de organisatie
+                  recordId:
+                    description: Identificatie van het record waar een abonnement op geplaatst is
                     type: string
                 required:
-                  - record
-                  - event
-                  - organisatieId
-                  - organisatieIdType
+                  - recordId
         callbacks:   # Callback definition
           notificatie:   # Event name
-            '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
+            '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
               post:
                 parameters:
                 - in: header
@@ -89,42 +76,38 @@ paths:
                           timestamp:
                               type: string
                               format: date-time
-                          abonnementId:
+                          recordId:
                             type: string
-                            format: uuid
                           eventType:
                             type: string
                             enum: ["create", "update"]
-                          entiteitID:
-                            type: string
                         required:
                           - timestamp
-                          - abonnementId
+                          - recordId
                           - eventType
-                          - message
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
         responses:
           '201':
-            description: Abonnement aangemaakt
+            description: Volgindicatie aangemaakt
             content:
               application/json:
                 schema:
                   type: object
                   properties:
-                    abonnementId:
+                    VolgindicatieId:
                       type: string
                       format: uuid
           '400':
-            description: Ongeldig Record - Abonnement niet aangemaakt
+            description: Onbekend RecordId - Volgindicatie niet aangemaakt
             content: {}
-  /abonnementen/persoon:
+  /volgindicaties/persoon:
       post:
         tags:
-          - Verwerken abonnementen
-        summary: Abonneren op indicaties voor een specifiek persoon
-        operationId: postAbonnementPersoon
+          - Verwerken volgindicaties
+        summary: Volgindicatie plaatsen op een specifiek persoon
+        operationId: postVolgindicatiePersoon
         parameters:
         - in: header
           name: X-orgKey
@@ -166,7 +149,7 @@ paths:
                   - persoonIdType
         callbacks:   # Callback definition
           notificatie:   # Event name
-            '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
+            '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
               post:
                 parameters:
                 - in: header
@@ -186,43 +169,39 @@ paths:
                           timestamp:
                               type: string
                               format: date-time
-                          abonnementId:
+                          recordId:
                             type: string
-                            format: uuid
                           eventType:
                             type: string
                             enum: ["create", "update"]
-                          recordID:
-                            type: string
                         required:
                           - timestamp
-                          - abonnementId
+                          - recordId
                           - eventType
-                          - message
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
         responses:
           '201':
-            description: Abonnement aangemaakt
+            description: Volgindicatie aangemaakt
             content:
               application/json:
                 schema:
                   type: object
                   properties:
-                    abonnementId:
+                    VolgindicatieId:
                       type: string
                       format: uuid
           '400':
-            description: Ongeldig BSN - Abonnement niet aangemaakt
+            description: Onbekend BSN - Volgindicatie niet aangemaakt
             content: {}
-  /abonnementen/{abonnementID}:
+  /volgindicaties/{volgindicatieId}:
     delete:
       tags:
-        - Verwerken abonnementen
-      summary: Verwijder een abonnement
-      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
-      operationId: deleteAbonnement
+        - Verwerken volgindicaties
+      summary: Verwijder een volgindicatie
+      description: 'Operatie voor het verwijderen van een eerder geplaatste volgindicatie'
+      operationId: deleteVolgindicatie
       parameters:
         - in: header
           name: X-orgKey
@@ -238,17 +217,17 @@ paths:
             type: string
           required: true
         - in: path
-          name: abonnementID
-          description: Id van het abonnement dat verwijderd dient te worden
+          name: VolgindicatieId
+          description: Id van de volgindicatie dat verwijderd dient te worden
           required: true
           schema:
             type: string
             format: uuid
       responses:
         '204':
-          description: Abonnement verwijderd
+          description: Volgindicatie verwijderd
         '404':
-          description: abonnementID niet gevonden 
+          description: Volgindicatie niet gevonden 
   /notificaties:
     post:
       tags:
