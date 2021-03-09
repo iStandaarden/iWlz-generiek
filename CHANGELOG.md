@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added 
-
-- This CHANGELOG file
+- Operatie voor het ophalen van informatie over "eigen" consents bij het netwerkpunt
+- Abonnement typen geconsolideerd tot 1 operatie
 - Delete operation for subscribers
+- This CHANGELOG file
 
 ### Changed
 - Endpoints renamed
