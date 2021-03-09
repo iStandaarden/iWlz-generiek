@@ -467,7 +467,7 @@ paths:
                   - organisatieId
                   - organisatieIdType
                   - aanmaakdatum
-    /netwerkpunt/intern/abonnees/{abonnementID}:
+  /netwerkpunt/intern/abonnees/{abonnementID}:
     delete:
       tags:
         - intern
