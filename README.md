@@ -33,6 +33,7 @@ U kunt ook gebruik maken van de online viewers:
 
 ## Versies
 * versie v0.1.0 initial
+* versie v0.2.0
 
 ## Documentatie
 @todo
