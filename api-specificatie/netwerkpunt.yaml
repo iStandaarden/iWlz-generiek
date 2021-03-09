@@ -17,12 +17,12 @@ externalDocs:
 servers:
   - url: 'https://www.mijnnetwerkpunt.nl'
 tags:
-  - name: netwerkpunt
+  - name: extern
     description: koppelvlak specificaties van Netwerkpunt naar buiten
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
-  - name: netwerkpunt_intern
+  - name: intern
     description: koppelvlak specificaties van Netwerkpunt naar backoffice (intern)
 #    externalDocs:
 #      description: todo
@@ -31,7 +31,7 @@ paths:
   /netwerkpunt/abonnement?type=Record:
       post:
         tags:
-          - netwerkpunt
+          - extern
         summary: Abonneren op een specifiek record
         operationId: postAbonnementRecord
         parameters:
@@ -122,7 +122,7 @@ paths:
   /netwerkpunt/abonnement?type=Persoon:
       post:
         tags:
-          - netwerkpunt
+          - extern
         summary: Abonneren op een specifiek persoon
         operationId: postAbonnementPersoon
         parameters:
@@ -219,7 +219,7 @@ paths:
   /netwerkpunt/notificeren:
     post:
       tags:
-        - netwerkpunt
+        - extern
       summary: Zendnotificatie naar andere netwerkpartijen
       operationId: zendNotificatie
       parameters:
@@ -267,7 +267,7 @@ paths:
   /netwerkpunt/abonnement/{abonnementID}:
     delete:
       tags:
-        - netwerkpunt
+        - extern
       summary: Verwijder een abonnement
       description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
       operationId: deleteAbonnement
@@ -294,7 +294,7 @@ paths:
   /netwerkpunt/intern/abonnement:
     get:
       tags:
-        - netwerkpunt_intern
+        - intern
       summary: Raadplegen eigen actuele abonnementen bij andere netwerkpartijen
       operationId: getEigenAbonnementen
       parameters:
@@ -382,7 +382,7 @@ paths:
   /netwerkpunt/intern/abonnees:
     get:
       tags:
-        - netwerkpunt_intern
+        - intern
       summary: Raadplegen actuele abonnementen die geplaatst zijn door andere netwerkpartijen
       operationId: getAbonnees
       parameters:
@@ -470,7 +470,7 @@ paths:
     /netwerkpunt/intern/abonnees/{abonnementID}:
     delete:
       tags:
-        - netwerkpunt_intern
+        - intern
       summary: Verwijder een abonnement
       description: 'Operatie voor het verwijderen van een abonnement geplaatst door een andere organisatie'
       operationId: deleteAbonnement
