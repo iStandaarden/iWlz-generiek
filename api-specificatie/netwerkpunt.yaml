@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: '0.1.0'
+  version: '0.2.0'
 externalDocs:
   description: Find out more about OpenAPI
   url: 'https://www.openapis.org'
@@ -472,7 +472,7 @@ paths:
         - intern
       summary: Verwijder een abonnee
       description: Operatie voor het verwijderen van een abonnee
-      operationId: deleteAbonnement
+      operationId: deleteAbonnee
       parameters:
         - in: header
           name: X-orgKey
@@ -492,4 +492,31 @@ paths:
         '204':
           description: Abonnee verwijderd
         '404':
-          description: OrganisatieId niet gevonden 
+          description: OrganisatieId niet gevonden
+  /netwerkpunt/intern/abonnement/{abonnementId}:
+    delete:
+      tags:
+        - intern
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
+      operationId: deleteAbonnement
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek Id van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: path
+          name: abonnementId
+          description: Id van het abonnement dat verwijderd dient te worden
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Abonnement verwijderd
+        '404':
+          description: abonnementId niet gevonden 
