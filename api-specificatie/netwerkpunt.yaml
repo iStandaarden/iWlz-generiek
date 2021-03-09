@@ -28,7 +28,7 @@ tags:
 #      description: todo
 #      url: 'todo'
 paths:
-  /netwerkpunt/{abonnementID}:
+  /netwerkpunt/abonnement/{abonnementID}:
     delete:
       tags:
         - netwerkpunt
@@ -55,7 +55,7 @@ paths:
           description: Abonnement verwijderd
         '404':
           description: abonnementID niet gevonden 
-  /netwerkpunt/abonnementRecord:
+  /netwerkpunt/abonnement?type=Record:
       post:
         tags:
           - netwerkpunt
@@ -146,7 +146,7 @@ paths:
           '400':
             description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /netwerkpunt/abonnementPersoon:
+  /netwerkpunt/abonnement?type=Persoon:
       post:
         tags:
           - netwerkpunt
@@ -243,7 +243,7 @@ paths:
           '400':
             description: Ongeldig BSN - Abonnement niet aangemaakt
             content: {}
-  /netwerkpunt/zendNotificatie:
+  /netwerkpunt/notificeren:
     post:
       tags:
         - netwerkpunt
@@ -291,20 +291,20 @@ paths:
                   abonnementId:
                     type: string
                     format: uuid
-  /netwerkpunt_intern/eigenAbonnementen:
+  /netwerkpunt/intern/abonnement:
     get:
       tags:
         - netwerkpunt_intern
       summary: Raadplegen eigen actuele abonnementen bij andere netwerkpartijen
       operationId: getEigenAbonnementen
       parameters:
-      # - in: header
-      #   name: X-orgKey
-      #   description: Uniek ID van de organisatie binnen het netwerk
-      #   schema:
-      #     type: integer
-      #     format: int32
-      #   required: true
+      #- in: header
+      #  name: X-orgKey
+      #  description: Uniek ID van de organisatie binnen het netwerk
+      #  schema:
+      #    type: integer
+      #    format: int32
+      #  required: true
       - in: query
         name: recordType
         description: record beschrijving
@@ -379,20 +379,20 @@ paths:
                   - organisatieId
                   - organisatieIdType
                   - aanmaakdatum
-  /netwerkpunt_intern/abonnees:
+  /netwerkpunt/intern/abonnees:
     get:
       tags:
         - netwerkpunt_intern
       summary: Raadplegen actuele abonnementen die geplaatst zijn door andere netwerkpartijen
       operationId: getAbonnees
       parameters:
-      # - in: header
-      #   name: X-orgKey
-      #   description: Uniek ID van de organisatie binnen het netwerk
-      #   schema:
-      #     type: integer
-      #     format: int32
-      #   required: true
+      - in: header
+        name: X-orgKey
+        description: Uniek ID van de organisatie binnen het netwerk
+        schema:
+          type: integer
+          format: int32
+        required: true
       - in: query
         name: recordType
         description: record beschrijving
