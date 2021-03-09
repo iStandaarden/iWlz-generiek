@@ -28,33 +28,6 @@ tags:
 #      description: todo
 #      url: 'todo'
 paths:
-  /netwerkpunt/abonnement/{abonnementID}:
-    delete:
-      tags:
-        - netwerkpunt
-      summary: Verwijder een abonnement
-      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
-      operationId: deleteAbonnement
-      parameters:
-        - in: header
-          name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
-          schema:
-            type: integer
-            format: int32
-          required: true
-        - in: path
-          name: abonnementID
-          description: Id van het abonnement dat verwijderd dient te worden
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Abonnement verwijderd
-        '404':
-          description: abonnementID niet gevonden 
   /netwerkpunt/abonnement?type=Record:
       post:
         tags:
@@ -291,6 +264,33 @@ paths:
                   abonnementId:
                     type: string
                     format: uuid
+  /netwerkpunt/abonnement/{abonnementID}:
+    delete:
+      tags:
+        - netwerkpunt
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
+      operationId: deleteAbonnement
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: path
+          name: abonnementID
+          description: Id van het abonnement dat verwijderd dient te worden
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Abonnement verwijderd
+        '404':
+          description: abonnementID niet gevonden 
   /netwerkpunt/intern/abonnement:
     get:
       tags:
@@ -467,4 +467,30 @@ paths:
                   - organisatieId
                   - organisatieIdType
                   - aanmaakdatum
-  
+    /netwerkpunt/intern/abonnees/{abonnementID}:
+    delete:
+      tags:
+        - netwerkpunt_intern
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een abonnement geplaatst door een andere organisatie'
+      operationId: deleteAbonnement
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek ID van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: path
+          name: abonnementID
+          description: Id van het abonnement dat verwijderd dient te worden
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Abonnement verwijderd
+        '404':
+          description: abonnementID niet gevonden 
