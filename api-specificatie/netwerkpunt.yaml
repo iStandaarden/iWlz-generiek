@@ -49,10 +49,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  subscriptionType:
+                  abonnementType:
                     description: Type abonement dat geplaatst moet worden
                     type: string
-                    enum: ["record", "persoon", "organisatie"]
+                    enum: ["record", "persoon"]
                   Id:
                     description: Identificatie behorende bij het abonnementtype
                     type: string
@@ -70,9 +70,10 @@ paths:
                     description: type identificatie van de organisatie
                     type: string
                 required:
-                  - subscriptionType
-                  - recordId
-                  - event
+                  - abonnementType
+                  - Id
+                  - IdType
+                  - eventType
                   - organisatieId
                   - organisatieIdType
         callbacks:   # Callback definition
@@ -103,13 +104,13 @@ paths:
                           eventType:
                             type: string
                             enum: ["create", "update"]
-                          entiteitID:
+                          recordId:
                             type: string
                         required:
                           - timestamp
                           - abonnementId
                           - eventType
-                          - message
+                          - recordId
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
@@ -217,7 +218,7 @@ paths:
       #    format: int32
       #  required: true
       - in: query
-        name: subscriptionType
+        name: abonnementType
         description: Type abonnement
         schema:
           type: string
@@ -271,7 +272,7 @@ paths:
                     description: abonnement identificatie
                     type: string
                     format: uuid
-                  subscriptionType:
+                  abonnementType:
                     description: Type abonnement
                     type: string
                   Id:
@@ -309,7 +310,7 @@ paths:
           format: int32
         required: true
       - in: query
-        name: subscriptionType
+        name: abonnementType
         description: Type abonnement
         schema:
           type: string
@@ -363,7 +364,7 @@ paths:
                     description: abonnement identificatie
                     type: string
                     format: uuid
-                  subscriptionType:
+                  abonnementType:
                     description: Type abonnement
                     type: string
                   Id:
