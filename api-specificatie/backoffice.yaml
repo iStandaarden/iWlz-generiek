@@ -105,13 +105,14 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update"]
-                          entiteitID:
+                            enum: ["create", "update", "delete"]
+                          recordId:
                             type: string
                         required:
                           - timestamp
                           - abonnementId
                           - eventType
+                          - recordId
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
