@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Toegevoegd 
 - Operatie voor het ophalen van informatie over "eigen" consents bij het netwerkpunt
 - Abonnementtypen geconsolideerd tot 1 operatie
-- Operatie voor het verwijderen van abonnees
-- Operatie voor het verwijderen van abonnementen
 - CHANGELOG file
 
 ### Aangepast
