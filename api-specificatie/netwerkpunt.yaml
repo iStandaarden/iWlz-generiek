@@ -15,7 +15,7 @@ externalDocs:
   description: Find out more about OpenAPI
   url: 'https://www.openapis.org'
 servers:
-  - url: 'https://www.mijnnetwerkpunt.nl'
+  - url: 'https://api.mijnnetwerkpunt.nl/rest'
 tags:
   - name: extern
     description: koppelvlak specificaties van Netwerkpunt naar buiten
@@ -41,6 +41,12 @@ paths:
           schema:
             type: integer
             format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
           required: true
         requestBody:
           required: true
@@ -90,6 +96,12 @@ paths:
                   schema:
                     type: integer
                     format: int32
+                  required: true
+                - in: header
+                  name: X-Request-ID
+                  description: Identificatie van het request
+                  schema:
+                    type: string
                   required: true
                 requestBody:   # Contents of the callback message
                   required: true
@@ -145,6 +157,12 @@ paths:
           type: integer
           format: int32
         required: true
+      - in: header
+        name: X-Request-ID
+        description: Identificatie van het request
+        schema:
+          type: string
+        required: true
       requestBody:   # Contents of the callback message
         required: true
         content:
@@ -194,6 +212,12 @@ paths:
             type: integer
             format: int32
           required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
         - in: path
           name: abonnementId
           description: Id van het abonnement dat verwijderd dient te worden
@@ -219,6 +243,12 @@ paths:
         schema:
           type: integer
           format: int32
+        required: true
+      - in: header
+        name: X-Request-ID
+        description: Identificatie van het request
+        schema:
+          type: string
         required: true
       - in: query
         name: scope

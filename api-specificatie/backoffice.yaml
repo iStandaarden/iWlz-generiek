@@ -42,6 +42,12 @@ paths:
             type: integer
             format: int32
           required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
         requestBody:
           required: true
           content:
@@ -90,6 +96,12 @@ paths:
                     type: integer
                     format: int32
                   required: true
+                - in: header
+                  name: X-Request-ID
+                  description: Identificatie van het request
+                  schema:
+                    type: string
+                  required: true
                 requestBody:   # Contents of the callback message
                   required: true
                   content:
@@ -130,7 +142,7 @@ paths:
           '400':
             description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /backoffice//abonnement/{abonnementID}:
+  /backoffice/abonnement/{abonnementID}:
     delete:
       tags:
         - Verwerken abonnementen
