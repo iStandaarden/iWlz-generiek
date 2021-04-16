@@ -6,18 +6,16 @@ Koppelvlak specificaties met netwerk brede functionaliteit.
     * Raadplegen data bij andere netwerkpartijen
 	
 * Koppelvlak Netwerkpunt intern
-    * Raadplegen geplaatste abonnementen
-    * Raadplegen abonnees
-    * Logging…
-    * Certificaten…
-    * Interne endpoints...
+
+    * Verzenden van notificatie
+    * Verzenden abonnement verzoek
+    * Raadplegen consents
 
 *  Koppelvlak Backoffice
     * Abonneren/Notificeren
         * Ontvangen van notificatie van andere netwerkpartijen
-        * Verzenden van notificatie
         * Ontvangen abonnement verzoek van andere netwerkpartijen
-        * Verzenden abonnement verzoek
+       
 
 ## Preview
 Om de koppelvlakspecificatie te bekijken kunt de yaml-file openen in elke text-editor, maar een specifieke IDE is aan te bevelen. 
