@@ -121,6 +121,8 @@ paths:
                           recordId:
                             type: string
                         required:
+                          - organisatieId
+                          - organisatieIdType
                           - timestamp
                           - abonnementId
                           - eventType
@@ -203,6 +205,12 @@ paths:
                       schema:
                         type: object
                         properties:
+                          organisatieId:
+                            description: identificatie van de organisatie
+                            type: string
+                          organisatieIdType:
+                            description: type identificatie van de organisatie
+                            type: string
                           timestamp:
                               type: string
                               format: date-time
@@ -216,6 +224,8 @@ paths:
                             type: string
                             example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
                         required:
+                          - organisatieId
+                          - organisatieIdType
                           - timestamp
                           - abonnementId
                           - eventType
