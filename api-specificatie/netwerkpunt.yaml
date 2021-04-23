@@ -118,7 +118,7 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update", "delete"]
+                            enum: ["all","create", "update", "delete"]
                           recordId:
                             type: string
                         required:
@@ -186,7 +186,7 @@ paths:
                   format: uuid
                 eventType:
                   type: string
-                  enum: ["create", "update", "delete"]
+                  enum: ["all","create", "update", "delete"]
                 recordId:
                   type: string
               required:

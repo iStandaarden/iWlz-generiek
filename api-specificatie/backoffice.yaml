@@ -68,10 +68,10 @@ paths:
                   eventType:
                     description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
                     type: string
+                    enum: ["all","create", "update", "delete"]
                   entiteit:
                     description: entiteit waarop het abonnement geplaatst moet worden
                     type: string
-                    enum: ["all","create", "update", "delete"]
                   recordId:
                     description: Identificatie van het record waarop het abonnement geplaatst wordt
                     type: string
@@ -117,7 +117,7 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update", "delete"]
+                            enum: ["all","create", "update", "delete"]
                           recordId:
                             type: string
                         required:
@@ -219,7 +219,7 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update"]
+                            enum: ["all","create", "update", "delete"]
                           recordID:
                             type: string
                             example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
