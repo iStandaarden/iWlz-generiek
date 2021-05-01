@@ -68,17 +68,16 @@ paths:
                   eventType:
                     description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
                     type: string
+                    enum: ["all","create", "update", "delete"]
                   entiteit:
                     description: entiteit waarop het abonnement geplaatst moet worden
                     type: string
-                    enum: ["all","create", "update", "delete"]
                   recordId:
                     description: Identificatie van het record waarop het abonnement geplaatst wordt
                     type: string
                   personId:
                     description: Identificatie van de persoon waarop het abonnement geplaatst wordt
-                    type: string
-                  
+                    type: string 
                 required:
                   - organisatieId
                   - organisatieIdType
