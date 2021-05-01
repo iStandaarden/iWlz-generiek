@@ -18,7 +18,7 @@ servers:
   - url: 'https://api.backoffice.nl/rest'
 tags:
   - name: Verwerken abonnementen
-    description: 'Operaties voor het verwerken van abonnementen'
+    description: 'Operaties voor het verwerken van volgindicaties'
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
@@ -86,7 +86,7 @@ paths:
                   - entiteit                  
         callbacks:   # Callback definition
           notificatie:   # Event name
-            '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
+            '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
               post:
                 parameters:
                 - in: header
@@ -112,9 +112,6 @@ paths:
                           timestamp:
                               type: string
                               format: date-time
-                          abonnementId:
-                            type: string
-                            format: uuid
                           eventType:
                             type: string
                             enum: ["all","create", "update", "delete"]
@@ -124,9 +121,8 @@ paths:
                           - organisatieId
                           - organisatieIdType
                           - timestamp
-                          - abonnementId
-                          - eventType
                           - recordId
+                          - eventType
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
@@ -138,7 +134,7 @@ paths:
                 schema:
                   type: object
                   properties:
-                    abonnementId:
+                    AbonnementId:
                       type: string
                       format: uuid
           '400':
@@ -166,7 +162,7 @@ paths:
             type: string
           required: true
         - in: path
-          name: abonnementID
+          name: abonnementId
           description: Id van het abonnement dat verwijderd dient te worden
           required: true
           schema:
