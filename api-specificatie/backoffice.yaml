@@ -143,7 +143,7 @@ paths:
   /backoffice/abonnement/{abonnementID}:
     delete:
       tags:
-        - Verwerken abonnmenten
+        - Verwerken abonnementen
       summary: Verwijder een abonnement
       description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
       operationId: deleteVolgindicatie
