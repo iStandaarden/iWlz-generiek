@@ -143,9 +143,9 @@ paths:
   /backoffice/abonnement/{abonnementID}:
     delete:
       tags:
-        - Verwerken volgindicaties
-      summary: Verwijder een volgindicatie
-      description: 'Operatie voor het verwijderen van een eerder geplaatste volgindicatie'
+        - Verwerken abonnmenten
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
       operationId: deleteVolgindicatie
       parameters:
         - in: header
@@ -178,7 +178,7 @@ paths:
       tags:
         - Verwerken notificaties
       summary: Operatie voor het ontvangen van notificaties
-      description: Vind indicatieID's en indicatiedatums van verstrekte indicaties op basis van het BSN van de cliënt.
+      description: Operatie voor het ontvangen van notificaties
       operationId: processNotification
       parameters:
         - in: header
