@@ -10,14 +10,14 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: '0.1.0'
+  version: '0.2.0'
 externalDocs:
   description: Find out more about OpenAPI
   url: 'https://www.openapis.org'
 servers:
   - url: 'https://api.backoffice.nl/rest'
 tags:
-  - name: Verwerken volgindicaties
+  - name: Verwerken abonnementen
     description: 'Operaties voor het verwerken van volgindicaties'
 #    externalDocs:
 #      description: todo
@@ -28,86 +28,12 @@ tags:
 #      description: todo
 #      url: 'todo'
 paths:
-  /volgindicaties/record:
+  /backoffice/abonnement:
       post:
         tags:
-          - Verwerken volgindicaties
-        summary: Volgindicatie plaatsen op een specifiek record
-        operationId: postVolgindicatieRecord
-        parameters:
-        - in: header
-          name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
-          schema:
-            type: integer
-            format: int32
-          required: true
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  recordId:
-                    description: Identificatie van het record waar een abonnement op geplaatst is
-                    type: string
-                required:
-                  - recordId
-        callbacks:   # Callback definition
-          notificatie:   # Event name
-            '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
-              post:
-                parameters:
-                - in: header
-                  name: X-orgKey
-                  description: Uniek ID van de organisatie binnen het netwerk
-                  schema:
-                    type: integer
-                    format: int32
-                  required: true
-                requestBody:   # Contents of the callback message
-                  required: true
-                  content:
-                    application/json:
-                      schema:
-                        type: object
-                        properties:
-                          timestamp:
-                              type: string
-                              format: date-time
-                          recordId:
-                            type: string
-                          eventType:
-                            type: string
-                            enum: ["create", "update"]
-                        required:
-                          - timestamp
-                          - recordId
-                          - eventType
-                responses:   # Expected responses to the callback message
-                  '200':
-                    description: Your server returns this code if it accepts the callback
-        responses:
-          '201':
-            description: Volgindicatie aangemaakt
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    VolgindicatieId:
-                      type: string
-                      format: uuid
-          '400':
-            description: Onbekend RecordId - Volgindicatie niet aangemaakt
-            content: {}
-  /volgindicaties/persoon:
-      post:
-        tags:
-          - Verwerken volgindicaties
-        summary: Volgindicatie plaatsen op een specifiek persoon
-        operationId: postVolgindicatiePersoon
+          - Verwerken abonnementen
+        summary: Abonneren op een specifiek record, persoon of organisatie
+        operationId: postAbonnementRecord
         parameters:
         - in: header
           name: X-orgKey
@@ -129,24 +55,35 @@ paths:
               schema:
                 type: object
                 properties:
-                  recordType:
+                  organisatieId:
+                    description: identificatie van de organisatie
                     type: string
-                    enum: ["wlzindicatie"]
+                  organisatieIdType:
+                    description: type identificatie van de organisatie
+                    type: string
+                  abonnementType:
+                    description: Type abonement dat geplaatst moet worden
+                    type: string
+                    enum: ["organisatie","record", "persoon"]
                   eventType:
                     description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
                     type: string
-                    enum: ["all","create", "update"]
-                  persoonId:
-                    description: identificatie persoon
+                    enum: ["all","create", "update", "delete"]
+                  entiteit:
+                    description: entiteit waarop het abonnement geplaatst moet worden
                     type: string
-                  persoonIdType:
-                    description: type identificatie persoon
+                  recordId:
+                    description: Identificatie van het record waarop het abonnement geplaatst wordt
                     type: string
-                    enum: ["BSN"]
+                  personId:
+                    description: Identificatie van de persoon waarop het abonnement geplaatst wordt
+                    type: string         
                 required:
-                  - event
                   - organisatieId
-                  - persoonIdType
+                  - organisatieIdType
+                  - abonnementType
+                  - eventType
+                  - entiteit                  
         callbacks:   # Callback definition
           notificatie:   # Event name
             '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
@@ -159,6 +96,12 @@ paths:
                     type: integer
                     format: int32
                   required: true
+                - in: header
+                  name: X-Request-ID
+                  description: Identificatie van het request
+                  schema:
+                    type: string
+                  required: true
                 requestBody:   # Contents of the callback message
                   required: true
                   content:
@@ -169,12 +112,14 @@ paths:
                           timestamp:
                               type: string
                               format: date-time
-                          recordId:
-                            type: string
                           eventType:
                             type: string
-                            enum: ["create", "update"]
+                            enum: ["all","create", "update", "delete"]
+                          recordId:
+                            type: string
                         required:
+                          - organisatieId
+                          - organisatieIdType
                           - timestamp
                           - recordId
                           - eventType
@@ -189,13 +134,13 @@ paths:
                 schema:
                   type: object
                   properties:
-                    VolgindicatieId:
+                    AbonnementId:
                       type: string
                       format: uuid
           '400':
-            description: Onbekend BSN - Volgindicatie niet aangemaakt
+            description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /volgindicaties/{volgindicatieId}:
+  /backoffice/abonnement/{abonnementID}:
     delete:
       tags:
         - Verwerken volgindicaties
@@ -217,8 +162,8 @@ paths:
             type: string
           required: true
         - in: path
-          name: VolgindicatieId
-          description: Id van de volgindicatie dat verwijderd dient te worden
+          name: abonnementId
+          description: Id van het abonnement dat verwijderd dient te worden
           required: true
           schema:
             type: string
@@ -227,8 +172,8 @@ paths:
         '204':
           description: Volgindicatie verwijderd
         '404':
-          description: Volgindicatie niet gevonden 
-  /notificaties:
+          description: abonnementID niet gevonden 
+  /backoffice/notificaties:
     post:
       tags:
         - Verwerken notificaties
@@ -256,6 +201,12 @@ paths:
                       schema:
                         type: object
                         properties:
+                          organisatieId:
+                            description: identificatie van de organisatie
+                            type: string
+                          organisatieIdType:
+                            description: type identificatie van de organisatie
+                            type: string
                           timestamp:
                               type: string
                               format: date-time
@@ -264,11 +215,13 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update"]
+                            enum: ["all","create", "update", "delete"]
                           recordID:
                             type: string
                             example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
                         required:
+                          - organisatieId
+                          - organisatieIdType
                           - timestamp
                           - abonnementId
                           - eventType

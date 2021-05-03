@@ -10,148 +10,30 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: '0.1.0'
+  version: '0.2.0'
 externalDocs:
   description: Find out more about OpenAPI
   url: 'https://www.openapis.org'
 servers:
-  - url: 'https://www.mijnnetwerkpunt.nl'
+  - url: 'https://api.mijnnetwerkpunt.nl/rest'
 tags:
-  - name: netwerkpunt
+  - name: extern
     description: koppelvlak specificaties van Netwerkpunt naar buiten
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
-  - name: netwerkpunt_intern
+  - name: intern
     description: koppelvlak specificaties van Netwerkpunt naar backoffice (intern)
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
 paths:
-  /netwerkpunt/{abonnementID}:
-    delete:
-      tags:
-        - netwerkpunt
-      summary: Verwijder een abonnement
-      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
-      operationId: deleteAbonnement
-      parameters:
-        - in: header
-          name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
-          schema:
-            type: integer
-            format: int32
-          required: true
-        - in: path
-          name: abonnementID
-          description: Id van het abonnement dat verwijderd dient te worden
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Abonnement verwijderd
-        '404':
-          description: abonnementID niet gevonden 
-  /netwerkpunt/abonnementRecord:
+  /netwerkpunt/abonnement:
       post:
         tags:
-          - netwerkpunt
-        summary: Abonneren op een specifiek record
+          - extern
+        summary: Plaatsen van een abonnement bij een netwerkpunt
         operationId: postAbonnementRecord
-        parameters:
-        - in: header
-          name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
-          schema:
-            type: integer
-            format: int32
-          required: true
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  record:
-                    description: naam van entiteit # of entiteitID?
-                    type: string
-                  eventType:
-                    description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-                    type: string
-                    enum: ["all","create", "update"]
-                  organisatieId:
-                    description: identificatie van de organisatie
-                    type: string
-                  organisatieIdType:
-                    description: type identificatie van de organisatie
-                    type: string
-                required:
-                  - record
-                  - event
-                  - organisatieId
-                  - organisatieIdType
-        callbacks:   # Callback definition
-          notificatie:   # Event name
-            '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
-              post:
-                parameters:
-                - in: header
-                  name: X-orgKey
-                  description: Uniek ID van de organisatie binnen het netwerk
-                  schema:
-                    type: integer
-                    format: int32
-                  required: true
-                requestBody:   # Contents of the callback message
-                  required: true
-                  content:
-                    application/json:
-                      schema:
-                        type: object
-                        properties:
-                          timestamp:
-                              type: string
-                              format: date-time
-                          abonnementId:
-                            type: string
-                            format: uuid
-                          eventType:
-                            type: string
-                            enum: ["create", "update"]
-                          entiteitID:
-                            type: string
-                        required:
-                          - timestamp
-                          - abonnementId
-                          - eventType
-                          - message
-                responses:   # Expected responses to the callback message
-                  '200':
-                    description: Your server returns this code if it accepts the callback
-        responses:
-          '201':
-            description: Abonnement aangemaakt
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    abonnementId:
-                      type: string
-                      format: uuid
-          '400':
-            description: Ongeldig Record - Abonnement niet aangemaakt
-            content: {}
-  /netwerkpunt/abonnementPersoon:
-      post:
-        tags:
-          - netwerkpunt
-        summary: Abonneren op een specifiek persoon
-        operationId: postAbonnementPersoon
         parameters:
         - in: header
           name: X-orgKey
@@ -173,24 +55,35 @@ paths:
               schema:
                 type: object
                 properties:
-                  recordType:
+                  organisatieId:
+                    description: identificatie van de organisatie
                     type: string
-                    enum: ["wlzindicatie"]
+                  organisatieIdType:
+                    description: type identificatie van de organisatie
+                    type: string
+                  abonnementType:
+                    description: Type abonement dat geplaatst moet worden
+                    type: string
+                    enum: ["organisatie","record", "persoon"]
                   eventType:
                     description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
                     type: string
-                    enum: ["all","create", "update"]
-                  persoonId:
-                    description: identificatie persoon
+                    enum: ["all","create", "update", "delete"]
+                  entiteit:
+                    description: entiteit waarop het abonnement geplaatst moet worden
                     type: string
-                  persoonIdType:
-                    description: type identificatie persoon
+                  recordId:
+                    description: Identificatie van het record waarop het abonnement geplaatst wordt
                     type: string
-                    enum: ["BSN"]
+                  personId:
+                    description: Identificatie van de persoon waarop het abonnement geplaatst wordt
+                    type: string 
                 required:
-                  - event
                   - organisatieId
-                  - persoonIdType
+                  - organisatieIdType
+                  - abonnementType
+                  - eventType
+                  - entiteit                  
         callbacks:   # Callback definition
           notificatie:   # Event name
             '{abonneeEndpoint/notificatie}':   # The callback URL for delivering notifications
@@ -202,6 +95,12 @@ paths:
                   schema:
                     type: integer
                     format: int32
+                  required: true
+                - in: header
+                  name: X-Request-ID
+                  description: Identificatie van het request
+                  schema:
+                    type: string
                   required: true
                 requestBody:   # Contents of the callback message
                   required: true
@@ -218,14 +117,16 @@ paths:
                             format: uuid
                           eventType:
                             type: string
-                            enum: ["create", "update"]
-                          recordID:
+                            enum: ["all","create", "update", "delete"]
+                          recordId:
                             type: string
                         required:
+                          - organisatieId
+                          - organisatieIdType
                           - timestamp
                           - abonnementId
                           - eventType
-                          - message
+                          - recordId
                 responses:   # Expected responses to the callback message
                   '200':
                     description: Your server returns this code if it accepts the callback
@@ -241,12 +142,12 @@ paths:
                       type: string
                       format: uuid
           '400':
-            description: Ongeldig BSN - Abonnement niet aangemaakt
+            description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /netwerkpunt/zendNotificatie:
+  /netwerkpunt/notificeren:
     post:
       tags:
-        - netwerkpunt
+        - extern
       summary: Zendnotificatie naar andere netwerkpartijen
       operationId: zendNotificatie
       parameters:
@@ -257,6 +158,12 @@ paths:
           type: integer
           format: int32
         required: true
+      - in: header
+        name: X-Request-ID
+        description: Identificatie van het request
+        schema:
+          type: string
+        required: true
       requestBody:   # Contents of the callback message
         required: true
         content:
@@ -264,6 +171,12 @@ paths:
             schema:
               type: object
               properties:
+                organisatieId:
+                  description: identificatie van de organisatie
+                  type: string
+                organisatieIdType:
+                  description: type identificatie van de organisatie
+                  type: string
                 timestamp:
                     type: string
                     format: date-time
@@ -272,14 +185,16 @@ paths:
                   format: uuid
                 eventType:
                   type: string
-                  enum: ["create", "update"]
-                recordID:
+                  enum: ["all","create", "update", "delete"]
+                recordId:
                   type: string
               required:
+                - organisatieId
+                - organisatieIdType
                 - timestamp
                 - abonnementId
                 - eventType
-                - message
+                - recordId
       responses:
         '202':
           description: notificatie ontvangen
@@ -291,50 +206,95 @@ paths:
                   abonnementId:
                     type: string
                     format: uuid
-  /netwerkpunt_intern/eigenAbonnementen:
+  /netwerkpunt/abonnement/{abonnementId}:
+    delete:
+      tags:
+        - extern
+      summary: Verwijder een abonnement
+      description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
+      operationId: deleteAbonnement
+      parameters:
+        - in: header
+          name: X-orgKey
+          description: Uniek Id van de organisatie binnen het netwerk
+          schema:
+            type: integer
+            format: int32
+          required: true
+        - in: header
+          name: X-Request-ID
+          description: Identificatie van het request
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: abonnementId
+          description: Id van het abonnement dat verwijderd dient te worden
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Abonnement verwijderd
+        '404':
+          description: abonnementId niet gevonden 
+  /netwerkpunt/intern/consents:
     get:
       tags:
-        - netwerkpunt_intern
-      summary: Raadplegen eigen actuele abonnementen bij andere netwerkpartijen
-      operationId: getEigenAbonnementen
+        - intern
+      summary: Raadplegen actuele consents die zijn verstrekt aan de netwerkpartij
+      operationId: getConsents
       parameters:
-      # - in: header
-      #   name: X-orgKey
-      #   description: Uniek ID van de organisatie binnen het netwerk
-      #   schema:
-      #     type: integer
-      #     format: int32
-      #   required: true
+      - in: header
+        name: X-orgKey
+        description: Uniek ID van de organisatie binnen het netwerk
+        schema:
+          type: integer
+          format: int32
+        required: true
+      - in: header
+        name: X-Request-ID
+        description: Identificatie van het request
+        schema:
+          type: string
+        required: true
       - in: query
-        name: recordType
-        description: record beschrijving
+        name: scope
+        description: Scope van de consent
         schema:
           type: string
       - in: query
-        name: eventType
-        description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-        schema: 
-          type: string
-          enum: ["all","create", "update"]
-      - in: query
-        name: organisatieId
-        description: identificatie van de organisatie waar abonnement is aangegaan
+        name: onderwerp
+        description: Onderwerp van de consent
         schema:
           type: string
       - in: query
-        name: organisatieIdType
-        description: type identificatie van de organisatie
+        name: wettelijkeGrondslag
+        description: Wettelijke grondslag van de consent
         schema:
           type: string
       - in: query
-        name: aanmaakdatumBegin
-        description: kleinste datum abonnement aangegaan
+        name: afgiftedatumBegin
+        description: kleinste afgiftedatum consent
         schema:
           type: string
           format: date-time
       - in: query
-        name: aanmaakdatumEind
-        description: grootste datum abonnement aangegaan
+        name: afgiftedatumEind
+        description: grootste afgiftedatum consent
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: vervaldatumBegin
+        description: kleinste vervaldatum consent
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: vervaldatumEind
+        description: grootste vervaldatum consent
         schema:
           type: string
           format: date-time
@@ -346,125 +306,22 @@ paths:
               schema:
                 type: object
                 properties:
-                  abonnementId:
-                    description: abonnement identificatie
+                  consentId:
+                    description: Consent identificatie
                     type: string
                     format: uuid
-                  recordType:
-                    description: record beschrijving
+                  scope:
+                    description: Scope van de consent
                     type: string
-                  recordID:
-                    description: record identificatie
+                  onderwerp:
+                    description: Onderwerp van de consent
                     type: string
-                    format: uuid
-                  eventType:
-                    description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
+                  wettelijkeGrondslag:
+                    description: Wettelijke grondslag van de consent
                     type: string
-                    enum: ["all","create", "update"]
-                  organisatieId:
-                    description: identificatie van de organisatie waar abonnement is aangegaan
+                  afgiftedatum:
+                    description: Afgiftedatum consent
                     type: string
-                  organisatieIdType:
-                    description: type identificatie van de organisatie
+                  vervaldatum:
+                    description: Vervaldatum consent
                     type: string
-                  aanmaakdatum:
-                    description: datum abonnement aangegaan
-                    type: string
-                    format: date-time
-                required:
-                  - abonnementId
-                  - recordType
-                  - recordID
-                  - eventType
-                  - organisatieId
-                  - organisatieIdType
-                  - aanmaakdatum
-  /netwerkpunt_intern/abonnees:
-    get:
-      tags:
-        - netwerkpunt_intern
-      summary: Raadplegen actuele abonnementen die geplaatst zijn door andere netwerkpartijen
-      operationId: getAbonnees
-      parameters:
-      # - in: header
-      #   name: X-orgKey
-      #   description: Uniek ID van de organisatie binnen het netwerk
-      #   schema:
-      #     type: integer
-      #     format: int32
-      #   required: true
-      - in: query
-        name: recordType
-        description: record beschrijving
-        schema:
-          type: string
-      - in: query
-        name: eventType
-        description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-        schema: 
-          type: string
-          enum: ["all","create", "update"]
-      - in: query
-        name: organisatieId
-        description: identificatie van de organisatie waar abonnement is aangegaan
-        schema:
-          type: string
-      - in: query
-        name: organisatieIdType
-        description: type identificatie van de organisatie
-        schema:
-          type: string
-      - in: query
-        name: aanmaakdatumBegin
-        description: kleinste datum abonnement aangegaan
-        schema:
-          type: string
-          format: date-time
-      - in: query
-        name: aanmaakdatumEind
-        description: grootste datum abonnement aangegaan
-        schema:
-          type: string
-          format: date-time
-      responses:
-        '200':
-          description: verzoek ontvangen
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  abonnementId:
-                    description: abonnement identificatie
-                    type: string
-                    format: uuid
-                  recordType:
-                    description: record beschrijving
-                    type: string
-                  recordID:
-                    description: record identificatie
-                    type: string
-                    format: uuid
-                  eventType:
-                    description: specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-                    type: string
-                    enum: ["all","create", "update"]
-                  organisatieId:
-                    description: identificatie van de organisatie waar abonnement is aangegaan
-                    type: string
-                  organisatieIdType:
-                    description: type identificatie van de organisatie
-                    type: string
-                  aanmaakdatum:
-                    description: datum abonnement aangegaan
-                    type: string
-                    format: date-time
-                required:
-                  - abonnementId
-                  - recordType
-                  - recordID
-                  - eventType
-                  - organisatieId
-                  - organisatieIdType
-                  - aanmaakdatum
-  
