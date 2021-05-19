@@ -37,7 +37,7 @@ paths:
         parameters:
         - in: header
           name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
+          description: Uniek ID van het netwerkpunt binnen het netwerk
           schema:
             type: integer
             format: int32
@@ -89,13 +89,6 @@ paths:
             '{/netwerkpunt/zendNotificatie}':   # The callback URL for delivering notifications
               post:
                 parameters:
-                - in: header
-                  name: X-orgKey
-                  description: Uniek ID van de organisatie binnen het netwerk
-                  schema:
-                    type: integer
-                    format: int32
-                  required: true
                 - in: header
                   name: X-Request-ID
                   description: Identificatie van het request
@@ -150,7 +143,7 @@ paths:
       parameters:
         - in: header
           name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
+          description: Uniek ID van het netwerkpunt binnen het netwerk
           schema:
             type: integer
             format: int32
@@ -183,7 +176,7 @@ paths:
       parameters:
         - in: header
           name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
+          description: Uniek ID van het netwerkpunt binnen het netwerk
           schema:
             type: integer
             format: int32
