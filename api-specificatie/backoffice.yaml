@@ -18,7 +18,7 @@ servers:
   - url: 'https://api.backoffice.nl/rest'
 tags:
   - name: Verwerken abonnementen
-    description: 'Operaties voor het verwerken van volgindicaties'
+    description: 'Operaties voor het verwerken van abonnementen'
 #    externalDocs:
 #      description: todo
 #      url: 'todo'
@@ -128,7 +128,7 @@ paths:
                     description: Your server returns this code if it accepts the callback
         responses:
           '201':
-            description: Volgindicatie aangemaakt
+            description: Abonnement aangemaakt
             content:
               application/json:
                 schema:
@@ -146,7 +146,7 @@ paths:
         - Verwerken abonnementen
       summary: Verwijder een abonnement
       description: 'Operatie voor het verwijderen van een eerder geplaatst abonnement'
-      operationId: deleteVolgindicatie
+      operationId: deleteAbonnement
       parameters:
         - in: header
           name: X-orgKey
@@ -170,7 +170,7 @@ paths:
             format: uuid
       responses:
         '204':
-          description: Volgindicatie verwijderd
+          description: Abonnement verwijderd
         '404':
           description: abonnementID niet gevonden 
   /backoffice/notificaties:
