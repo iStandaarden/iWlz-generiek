@@ -37,7 +37,7 @@ paths:
         parameters:
         - in: header
           name: X-orgKey
-          description: Uniek ID van de organisatie binnen het netwerk
+          description: Uniek ID van het netwerkpunt binnen het netwerk
           schema:
             type: integer
             format: int32
@@ -91,7 +91,7 @@ paths:
                 parameters:
                 - in: header
                   name: X-orgKey
-                  description: Uniek ID van de organisatie binnen het netwerk
+                  description: Uniek ID van het netwerkpunt binnen het netwerk
                   schema:
                     type: integer
                     format: int32
@@ -152,13 +152,6 @@ paths:
       operationId: zendNotificatie
       parameters:
       - in: header
-        name: X-orgKey
-        description: Uniek ID van de organisatie binnen het netwerk
-        schema:
-          type: integer
-          format: int32
-        required: true
-      - in: header
         name: X-Request-ID
         description: Identificatie van het request
         schema:
@@ -216,7 +209,7 @@ paths:
       parameters:
         - in: header
           name: X-orgKey
-          description: Uniek Id van de organisatie binnen het netwerk
+          description: Uniek ID van het netwerkpunt binnen het netwerk
           schema:
             type: integer
             format: int32
@@ -246,13 +239,6 @@ paths:
       summary: Raadplegen actuele consents die zijn verstrekt aan de netwerkpartij
       operationId: getConsents
       parameters:
-      - in: header
-        name: X-orgKey
-        description: Uniek ID van de organisatie binnen het netwerk
-        schema:
-          type: integer
-          format: int32
-        required: true
       - in: header
         name: X-Request-ID
         description: Identificatie van het request
