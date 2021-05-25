@@ -70,7 +70,7 @@ paths:
                 content:
                   application/json:
                     schema:
-                      $ref: "#/components/schemas/Callback"
+                      $ref: "#/components/schemas/Notificatie"
               responses: # Expected responses to the callback message
                 '200':
                   description: Your server returns this code if it accepts the callback
@@ -183,29 +183,6 @@ components:
         - abonnementType
         - eventType
         - entiteit
-    Callback:
-      type: object
-      properties:
-        organisatieId:
-          description: identificatie van de organisatie
-          type: string
-        organisatieIdType:
-          description: type identificatie van de organisatie
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        eventType:
-          type: string
-          enum: ["create", "update", "delete" ]
-        recordId:
-          type: string
-      required:
-        - organisatieId
-        - organisatieIdType
-        - timestamp
-        - recordId
-        - eventType
     Notificatie:
       type: object
       properties:
@@ -223,7 +200,7 @@ components:
           format: uuid
         eventType:
           type: string
-          enum: [ "all","create", "update", "delete" ]
+          enum: ["create", "update", "delete" ]
         recordID:
           type: string
           example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
