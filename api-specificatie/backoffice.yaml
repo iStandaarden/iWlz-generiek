@@ -191,7 +191,7 @@ components:
           format: date-time
         eventType:
           type: string
-          enum: [ "all","create", "update", "delete" ]
+          enum: ["create", "update", "delete" ]
         recordId:
           type: string
       required:
