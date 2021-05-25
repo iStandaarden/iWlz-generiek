@@ -186,6 +186,12 @@ components:
     Callback:
       type: object
       properties:
+        organisatieId:
+          description: identificatie van de organisatie
+          type: string
+        organisatieIdType:
+          description: type identificatie van de organisatie
+          type: string
         timestamp:
           type: string
           format: date-time
