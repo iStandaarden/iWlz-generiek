@@ -133,7 +133,7 @@ paths:
           '400':
             description: Ongeldig Record - Abonnement niet aangemaakt
             content: {}
-  /backoffice/abonnement/{abonnementID}:
+  /backoffice/abonnement/{abonnementId}:
     delete:
       tags:
         - Verwerken abonnementen
