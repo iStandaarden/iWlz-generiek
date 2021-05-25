@@ -56,7 +56,7 @@ paths:
               $ref: "#/components/schemas/Abonnement"
       callbacks: # Callback definition
         notificatie: # Event name
-          '{/netwerkpunt/zendNotificatie}': # The callback URL for delivering notifications
+          '{/netwerkpunt/notificeren}': # The callback URL for delivering notifications
             post:
               parameters:
                 - in: header
