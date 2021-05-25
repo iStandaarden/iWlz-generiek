@@ -165,7 +165,7 @@ paths:
         '204':
           description: Abonnement verwijderd
         '404':
-          description: abonnementID niet gevonden 
+          description: abonnementId niet gevonden 
   /backoffice/notificaties:
     post:
       tags:
