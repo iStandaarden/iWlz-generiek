@@ -76,7 +76,7 @@ paths:
                   description: Your server returns this code if it accepts the callback
       responses:
         '201':
-          description: Volgindicatie aangemaakt
+          description: Abonnement aangemaakt
           content:
             application/json:
               schema:
