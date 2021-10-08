@@ -201,7 +201,7 @@ components:
         eventType:
           type: string
           enum: ["create", "update", "delete" ]
-        recordID:
+        recordId:
           type: string
           example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd"
       required:
@@ -210,4 +210,4 @@ components:
         - timestamp
         - abonnementId
         - eventType
-        - recordID
+        - recordId
