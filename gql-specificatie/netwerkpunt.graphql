@@ -1,5 +1,5 @@
 """ 
-  Graphql Schemadefinitie tbv interactie met de backoffice.
+  Graphql Schemadefinitie tbv interactie met het netwerkpunt.
   Versie 0.0.1
 
   contact:
@@ -21,13 +21,16 @@ schema {
 """
 type Query {
     # Abonnement callback
-    abonnementCallback($xRequestID: xRequestID): Abonnement!
+    abonnementCallback($xRequestID: xRequestID!): Abonnement!
 
     # Abonnement ophalen met ID
-    abonnement($id: abonnementId): Abonnement!
+    getAbonnement($id: abonnementId!): Abonnement!
 
     # notificatie
-    notificatie($xOrgKey: xOrgKey, $xRequestID: xRequestID): Abonnement!
+    getNotificatie($xOrgKey: xOrgKey!, $xRequestID: xRequestID!): Abonnement!
+
+    # consent(s) ophalen 
+    getConsent($xRequestID: String!, $Scope: scope, $onderwerp: onderwerp, $wettelijkeGrondslag: wettelijkeGrondslag, $afgiftedatumBegin: Time, $afgiftedatumEind: Time, $vervaldatumBegin: Time, $vervaldatumEind: Time): Consent!
 }
 
 """
@@ -79,6 +82,20 @@ input DeleteAbonnement {
     id: UUID! # AbonnementID
     deletedAt: Time!
 }
+
+type consent {
+    xRequestID: String!
+    consentId: UUID! # Consent identificatie
+    scope: String! # Scope van de consent
+    onderwerp: String! # Onderwerp van de consent
+    wettelijkeGrondslag: String! # Wettelijke grondslag van de consent
+    afgiftedatum: Time! # Afgiftedatum consent
+    vervaldatum: Time # Vervaldatum consent
+    createdAt: Time! 
+    updatedAt: Time!
+    deletedAt: Time
+}
+
 
 """
 Notificatie type is niet nodig want is subset van abonnement. Een select van de onderstaande kolommen uit type Abonnement zou voldoende moeten zijn
