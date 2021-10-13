@@ -31,6 +31,9 @@ type Query {
 
     # consent(s) ophalen 
     getConsent($xRequestID: String!, $Scope: scope, $onderwerp: onderwerp, $wettelijkeGrondslag: wettelijkeGrondslag, $afgiftedatumBegin: Time, $afgiftedatumEind: Time, $vervaldatumBegin: Time, $vervaldatumEind: Time): Consent!
+
+    # metadata ophalen - Raadplegen metadata van het netwerkpunt
+    getMetadata: metadata!
 }
 
 """
@@ -96,6 +99,18 @@ type consent {
     deletedAt: Time
 }
 
+type metadata {
+    identifier: String # De unieke identificatie van de een specifieke versie van de gegevensstandaard
+    title: String # De naam van de modelgegevensset e.g. Indicatieregister
+    description: String # Beschrijving van de modelgegevensset
+    modified: Time # De datum waarop de modelgegevensset voor het laatst is gewijzigd
+    language: String # De taal waarin de inhoud van de modelgegevensset is uitgedrukt e.g. Nederlands
+    authority: String # Overheidsorganisatie die de wettelijke verantwoordelijkheid draagt voor de inhoud (strekking) van de modelgegevensset
+    publisher: String # De beheerorganisatie die verantwoordelijk is voor de publicatie van de dataset
+    spatial: String # Geografisch gebied waar de modelgegevensset betrekking op heeft e.g. Landelijk
+    temporal: String # Periode waar de modelgegevensset betrekking op heeft
+    hasVersion: String # De versie van de modelgegevensset e.g. 1.0
+}
 
 """
 Notificatie type is niet nodig want is subset van abonnement. Een select van de onderstaande kolommen uit type Abonnement zou voldoende moeten zijn
