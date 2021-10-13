@@ -157,7 +157,58 @@ paths:
         '204':
           description: Abonnement verwijderd
         '404':
-          description: abonnementId niet gevonden 
+          description: abonnementId niet gevonden
+  /netwerkpunt/metadata:
+    get:
+      tags:
+        - extern
+      summary: Raadplegen metadata van het netwerkpunt
+      operationId: getMetadata
+      responses:
+        '200':
+          description: verzoek ontvangen
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  identifier:
+                    description: De unieke identificatie van de een specifieke versie van de gegevensstandaard
+                    type: string
+                  title:
+                    description: De naam van de modelgegevensset
+                    type: string
+                    example: Indicatieregister
+                  description:
+                    description: Beschrijving van de modelgegevensset
+                    type: string
+                  modified:
+                    description: De datum waarop de modelgegevensset voor het laatst is gewijzigd
+                    type: string
+                    format: date-time
+                  language:
+                    description: De taal waarin de inhoud van de modelgegevensset is uitgedrukt
+                    type: string
+                    example: Nedelands
+                  authority:
+                    description: Overheidsorganisatie die de wettelijke verantwoordelijkheid draagt voor de inhoud (strekking) van de modelgegevensset
+                    type: string
+                  publisher:
+                    description: De beheerorganisatie die verantwoordelijk is voor de publicatie van de dataset
+                    type: string 
+                  spatial:
+                    description: Geografisch gebied waar de modelgegevensset betrekking op heeft
+                    type: string
+                    example: Landelijk
+                  temporal:
+                    description: Periode waar de modelgegevensset betrekking op heeft
+                    type: string
+                  hasVersion:
+                    description: De versie van de modelgegevensset
+                    type: string
+                    example: '1.0'
+        '404':
+          description: metadata niet gevonden
   /netwerkpunt/intern/consents:
     get:
       tags:
