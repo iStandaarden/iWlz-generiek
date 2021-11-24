@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Operatie voor het ophalen van informatie over "eigen" consents bij het netwerkpunt
 - Abonnementtypen geconsolideerd tot 1 operatie
 - CHANGELOG file
+- Issue #14
+- Issue #15
 
 ### Aangepast
 - Endpoints hermoend
