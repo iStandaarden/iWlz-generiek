@@ -77,7 +77,6 @@ input ProcessAbonnement {
 
 input DeleteAbonnement {
     id: UUID! # AbonnementID
-    deletedAt: Time!
 }
 
 type consent {
