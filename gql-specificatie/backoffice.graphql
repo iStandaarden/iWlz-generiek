@@ -1,6 +1,6 @@
 """ 
   Graphql Schemadefinitie tbv interactie met de backoffice.
-  Versie 0.0.1
+  Versie 0.0.2
 
   contact:
     name: "iStandaarden"
@@ -94,22 +94,22 @@ type Notificatie {
 """
 # Abonnementtype - Type abonement dat geplaatst moet worden
 enum Abonnementtype {
-    organisatie
-    record
-    persoon
+  ORGANISATIE
+  RECORD
+  PERSOON
 }
 
 # EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
 enum EventTypeAll {
-    all
-    create
-    update
-    delete
+  ALL
+  CREATE
+  UPDATE
+  DELETE
 }
 
 # EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
 enum EventTypeCUD {
-    create
-    update
-    delete
+  CREATE
+  UPDATE
+  DELETE
 }

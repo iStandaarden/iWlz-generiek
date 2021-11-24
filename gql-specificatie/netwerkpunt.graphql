@@ -1,6 +1,6 @@
 """ 
   Graphql Schemadefinitie tbv interactie met het netwerkpunt.
-  Versie 0.0.1
+  Versie 0.0.2
 
   contact:
     name: "iStandaarden"
@@ -40,11 +40,11 @@ type Query {
   Mutaties
 """
 type Mutation {
-    # Abonnement Mutations
-    processAbonnement(input: ProcessAbonnement!): Abonnement!
+    # Abonnement aanmaken
+    postAbonnement(input: PostAbonnement!): Abonnement!
 
     # Abonnement delete
-    deleteAbonnement(input: DeleteAbonnement!): Abonnement!
+    deleteAbonnement(input: DeleteAbonnement!): DeleteAbonnementResponse!
 }
 
 """
@@ -65,7 +65,11 @@ type Abonnement {
     deletedAt: Time
 }
 
-input ProcessAbonnement {
+type DeleteAbonnementResponse {
+    responseCode: [deleteResponse]!
+    }
+
+input PostAbonnement {
     organisatieId: String! #identificatie van de organisatie
     organisatieIdType: String! # type identificatie van de organisatie
     abonnementType: [AbonnementType]! # type abonnenment
@@ -124,22 +128,28 @@ type Notificatie {
 """
 # Abonnementtype - Type abonement dat geplaatst moet worden
 enum Abonnementtype {
-    organisatie
-    record
-    persoon
+  ORGANISATIE
+  RECORD
+  PERSOON
 }
 
 # EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
 enum EventTypeAll {
-    all
-    create
-    update
-    delete
+  ALL
+  CREATE
+  UPDATE
+  DELETE
 }
 
 # EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
 enum EventTypeCUD {
-    create
-    update
-    delete
+  CREATE
+  UPDATE
+  DELETE
+}
+
+# deleteResponse = return codes voor delete abonnement
+enum deleteResponse  {
+  204 #Abonnement verwijderd
+  404 #abonnementId niet gevonden
 }
