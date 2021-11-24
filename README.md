@@ -1,12 +1,12 @@
 # iWlz-generiek
 Koppelvlak specificaties met netwerk brede functionaliteit.
 
-* Koppelvlak specificaties Netwerkpunt
+* Koppelvlak Netwerkpunt Extern: netwerkpunt naar buiten
     * Plaatsen abonnementen bij andere netwerkpartijen
     * Raadplegen data bij andere netwerkpartijen
+    * Raadplegen metadata van het netwerkpunt
 	
-* Koppelvlak Netwerkpunt intern
-
+* Koppelvlak Netwerkpunt intern: Netwerkpunt naar backoffice (intern)
     * Verzenden van notificatie
     * Verzenden abonnement verzoek
     * Raadplegen consents

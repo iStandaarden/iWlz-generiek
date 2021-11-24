@@ -52,8 +52,6 @@ type Mutation {
 """
 # Abonnement
 type Abonnement {
-    xOrgKey: Int! # Uniek ID van het netwerkpunt binnen het netwerk
-    xRequestID: String! # Identificatie van het request
     id: UUID! # AbonnementID
     organisatieId: String! #identificatie van de organisatie
     organisatieIdType: String! # type identificatie van de organisatie
@@ -68,8 +66,6 @@ type Abonnement {
 }
 
 input ProcessAbonnement {
-    xOrgKey: Int! # Uniek ID van het netwerkpunt binnen het netwerk
-    xRequestID: String! # Identificatie van het request
     organisatieId: String! #identificatie van de organisatie
     organisatieIdType: String! # type identificatie van de organisatie
     abonnementType: [AbonnementType]! # type abonnenment
@@ -80,14 +76,11 @@ input ProcessAbonnement {
 }
 
 input DeleteAbonnement {
-    xOrgKey: Int! # Uniek ID van het netwerkpunt binnen het netwerk
-    xRequestID: String! # Identificatie van het request
     id: UUID! # AbonnementID
     deletedAt: Time!
 }
 
 type consent {
-    xRequestID: String!
     consentId: UUID! # Consent identificatie
     scope: String! # Scope van de consent
     onderwerp: String! # Onderwerp van de consent
