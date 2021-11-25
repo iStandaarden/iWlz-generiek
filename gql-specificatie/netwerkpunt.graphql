@@ -41,7 +41,7 @@ type Query {
 """
 type Mutation {
     # Abonnement aanmaken
-    createAbonnement(input: CreateAbonnement!): Abonnement!
+    createAbonnement(input: CreateAbonnement!): CreateAbonnementResponse!
 
     # Abonnement delete
     deleteAbonnement(input: DeleteAbonnement!): DeleteAbonnementResponse!
@@ -65,9 +65,13 @@ type Abonnement {
     deletedAt: Time
 }
 
+type CreateAbonnementResponse {
+  abonnementID: UUID!
+}
+
 type DeleteAbonnementResponse {
-    responseCode: [deleteResponse]!
-    }
+  responseCode: [deleteResponse]!
+}
 
 input CreateAbonnement {
     organisatieId: String! #identificatie van de organisatie
