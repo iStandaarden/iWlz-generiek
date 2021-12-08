@@ -125,6 +125,26 @@ paths:
                   abonnementId:
                     type: string
                     format: uuid
+        '404':
+          description: geen abonnee gevonden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  abonnementId:
+                    type: string
+                    format: uuid
+        '504':
+          description: notificatie kon niet worden afgeleverd
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  abonnementId:
+                    type: string
+                    format: uuid
   /netwerkpunt/abonnement/{abonnementId}:
     delete:
       tags:
