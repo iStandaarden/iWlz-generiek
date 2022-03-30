@@ -35,10 +35,10 @@ type Query {
 """
 type Mutation {
     # Abonnement Mutations
-    processAbonnement(input: ProcessAbonnement!): Abonnement!
+    createAbonnement(input: CreateAbonnement!): CreateAbonnementResponse!
 
     # Abonnement delete
-    deleteAbonnement(input: DeleteAbonnement!): Abonnement!
+    deleteAbonnement(input: DeleteAbonnement!): DeleteAbonnementResponse!
 }
 
 """
@@ -59,7 +59,15 @@ type Abonnement {
     deletedAt: Time
 }
 
-input ProcessAbonnement {
+type CreateAbonnementResponse {
+  abonnementId: UUID
+}
+
+type DeleteAbonnementResponse {
+  responseCode: [deleteResponse]!
+}
+
+input CreateAbonnement {
     organisatieId: String! #identificatie van de organisatie
     organisatieIdType: String! # type identificatie van de organisatie
     abonnementType: [AbonnementType]! # type abonnenment
@@ -71,7 +79,6 @@ input ProcessAbonnement {
 
 input DeleteAbonnement {
     id: UUID! # AbonnementID
-    deletedAt: Time!
 }
 
 """
@@ -112,4 +119,10 @@ enum EventTypeCUD {
   CREATE
   UPDATE
   DELETE
+}
+
+# deleteResponse = return codes voor delete abonnement
+enum deleteResponse  {
+  204 #Abonnement verwijderd
+  404 #abonnementId niet gevonden
 }
