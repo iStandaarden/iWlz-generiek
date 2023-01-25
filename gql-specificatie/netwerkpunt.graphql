@@ -52,14 +52,11 @@ type Mutation {
 """
 # Abonnement
 type Abonnement {
-    id: UUID! # AbonnementID
+    abonnementId: UUID! # AbonnementID
     organisatieId: String! #identificatie van de organisatie
-    organisatieIdType: String! # type identificatie van de organisatie
-    abonnementType: [AbonnementType]! # voor welke type abonnement is gezet
-    eventType: [EventTypeAll]! # voor welke gebeurtenis(sen) abonnement is gezet
-    entiteit: String! # entiteit waarop het abonnement geplaatst moet worden
-    recordId: String # Identificatie van het record waarop het abonnement geplaatst wordt
-    personId: String # Identificatie van de persoon waarop het abonnement geplaatst wordt
+    abonnementType: String! # voor welke type abonnement is gezet
+    idType: String! # type identificatie
+    id: String! # identificatie van het object waar het abonnement op is geplaatst
     createdAt: Time! 
     updatedAt: Time!
     deletedAt: Time
@@ -75,16 +72,13 @@ type DeleteAbonnementResponse {
 
 input CreateAbonnement {
     organisatieId: String! #identificatie van de organisatie
-    organisatieIdType: String! # type identificatie van de organisatie
-    abonnementType: [AbonnementType]! # type abonnenment
-    eventType: [EventTypeAll]! # voor welke gebeurtenis(sen) abonnement gezet wordt
-    entiteit: String! # entiteit waarop het abonnement geplaatst moet worden
-    recordId: String # example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd" 
-    personId: String # Identificatie van de persoon waarop het abonnement geplaatst wordt
+    abonnementType: String! # type abonnenment
+    idType: String! # type identificatie
+    id: String! # identificatie van het object waar het abonnement op is geplaatst
 }
 
 input DeleteAbonnement {
-    id: UUID! # AbonnementID
+    abonnementId: UUID! # AbonnementID
 }
 
 type consent {
