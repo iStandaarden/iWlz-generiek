@@ -55,7 +55,7 @@ type Abonnement {
     abonnementId: UUID! # AbonnementID
     organisatieId: String! #identificatie van de organisatie
     abonnementType: String! # voor welke type abonnement is gezet
-    idType: String! # type identificatie
+    idType: [idType]! # type identificatie
     id: String! # identificatie van het object waar het abonnement op is geplaatst
     createdAt: Time! 
     updatedAt: Time!
@@ -73,7 +73,7 @@ type DeleteAbonnementResponse {
 input CreateAbonnement {
     organisatieId: String! #identificatie van de organisatie
     abonnementType: String! # type abonnenment
-    idType: String! # type identificatie
+    idType: [idType]! # type identificatie
     id: String! # identificatie van het object waar het abonnement op is geplaatst
 }
 
@@ -144,4 +144,14 @@ enum EventTypeCUD {
 enum deleteResponse  {
   204 #Abonnement verwijderd
   404 #abonnementId niet gevonden
+}
+
+# idType = Identificatietypen tbv plaatsen abonnement
+enum idType {
+  BSN
+  KvK
+  UZOVI
+  AGB
+  OIN
+  ObjectId
 }
