@@ -124,12 +124,6 @@ type Notificatie {
 """
   Codelijsten - enums
 """
-# Abonnementtype - Type abonement dat geplaatst moet worden
-enum Abonnementtype {
-  ORGANISATIE
-  RECORD
-  PERSOON
-}
 
 # EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
 enum EventTypeAll {
