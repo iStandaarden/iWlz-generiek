@@ -55,7 +55,7 @@ type Abonnement {
     abonnementId: UUID! # AbonnementID
     organisatieId: String! #identificatie van de organisatie
     abonnementType: String! # voor welke type abonnement is gezet
-    idType: [idType]! # type identificatie
+    idType: idType! # type identificatie
     id: String! # identificatie van het object waar het abonnement op is geplaatst
     createdAt: Time! 
     updatedAt: Time!
@@ -73,7 +73,7 @@ type DeleteAbonnementResponse {
 input CreateAbonnement {
     organisatieId: String! #identificatie van de organisatie
     abonnementType: String! # type abonnenment
-    idType: [idType]! # type identificatie
+    idType: idType! # type identificatie
     id: String! # identificatie van het object waar het abonnement op is geplaatst
 }
 
