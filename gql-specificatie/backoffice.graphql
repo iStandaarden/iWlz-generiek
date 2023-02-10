@@ -64,7 +64,7 @@ type CreateAbonnementResponse {
 }
 
 type DeleteAbonnementResponse {
-  responseCode: [deleteResponse]!
+  responseCode: deleteResponse!
 }
 
 input CreateAbonnement {

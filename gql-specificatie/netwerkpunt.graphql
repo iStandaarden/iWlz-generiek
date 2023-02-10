@@ -45,6 +45,9 @@ type Mutation {
 
     # Abonnement delete
     deleteAbonnement(input: DeleteAbonnement!): DeleteAbonnementResponse!
+
+    # AbonnementType aanbieden
+    createAbonnementType(input: AbonnementType!): CreateAbonnementTypeResponse!
 }
 
 """
@@ -67,7 +70,7 @@ type CreateAbonnementResponse {
 }
 
 type DeleteAbonnementResponse {
-  responseCode: [deleteResponse]!
+  responseCode: deleteResponse!
 }
 
 input CreateAbonnement {
@@ -104,6 +107,21 @@ type metadata {
     spatial: String # Geografisch gebied waar de modelgegevensset betrekking op heeft e.g. Landelijk
     temporal: String # Periode waar de modelgegevensset betrekking op heeft
     hasVersion: String # De versie van de modelgegevensset e.g. 1.0
+}
+
+input AbonnementType {
+    abonnementTypeId: UUID! # AbonnementID
+    organisatieId: String! #identificatie van de organisatie
+    abonnementType: String! # voor welke type abonnement is gezet
+    abonnementDescription: String! # Beschrijving van het abonnement
+    idType: idType! # Aanduiding van het type Id dat moet worden meegegeven bij het afsluiten van het abonnement. Een abonnementType kan werken op basis van meerdere idType’s.
+    eventType: EventTypeCUD! # Aanduiding welk event een notificatie geeft.
+    eventTrigger: String! # Beschrijving welke trigger zorgt voor een notificatie
+    objectIdType: String! # Beschrijving welke ObjectID wordt teruggeven in de notificatie, voor gebruik als ID in de juiste GraphQL query
+}
+
+type CreateAbonnementTypeResponse {
+  createAbonnementTypeResponse: CreateAbonnementTypeResponse!
 }
 
 """
@@ -154,4 +172,9 @@ enum idType {
   AGB
   OIN
   ObjectId
+}
+
+enum createAbonnementTypeResponse {
+  204 #AbonnementType geaccepteerd
+  400 #AbonnementType bestaat al
 }
