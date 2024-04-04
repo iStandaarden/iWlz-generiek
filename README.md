@@ -27,7 +27,7 @@ Koppelvlak specificaties met netwerk brede functionaliteit.
 
 ## Bronnen
 * Actieprogramma iWlz: van keten naar netwerk: [lees hier meer over het Actieprogramma iWlz](https://www.istandaarden.nl/actieprogramma-iwlz "Actieprogramma iWlz")
-* Informatiemodel iStandaarden : [Informatiemodellen](https://informatiemodellen.istandaarden.nl/)
+* Informatiemodel iStandaarden : [Informatiemodellen](https://informatiemodel.istandaarden.nl/)
 * Portaal voor iStandaarden in de Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
 
 ## Contactpersonen:
