@@ -1,20 +1,9 @@
 # iWlz-generiek
 Koppelvlak specificaties met netwerk brede functionaliteit.
 
-* Koppelvlak Netwerkpunt Extern: netwerkpunt naar buiten
-    * Plaatsen abonnementen bij andere netwerkpartijen
-    * Raadplegen data bij andere netwerkpartijen
-    * Raadplegen metadata van het netwerkpunt
-	
-* Koppelvlak Netwerkpunt intern: Netwerkpunt naar backoffice (intern)
+* Koppelvlak Netwerkpunt
     * Verzenden van notificatie
-    * Verzenden abonnement verzoek
-    * Raadplegen consents
-
-*  Koppelvlak Backoffice
-    * Abonneren/Notificeren
-        * Ontvangen van notificatie van andere netwerkpartijen
-        * Ontvangen abonnement verzoek van andere netwerkpartijen
+    * Verzenden van (fout) melding
 
 
 ## Versies
@@ -31,8 +20,9 @@ Koppelvlak specificaties met netwerk brede functionaliteit.
 * Portaal voor iStandaarden in de Zorg en Ondersteuning: [homepagina iStandaarden](https://www.istandaarden.nl)
 
 ## Contactpersonen:
-* Hilko Jacobse - [@hilkojacobse](https://github.com/HilkoJacobse)
-* Remo van Rest - [@rvanrest](https://github.com/rvanrest)
+* Hilko Jacobse  - [@hilkojacobse](https://github.com/HilkoJacobse)
+* Remo van Rest  - [@rvanrest](https://github.com/rvanrest)
+* Dennis de Gouw - [@dennisdegouw](https://github.com/dgouw)
 
 ## Licentie
 Copyright &copy; iStandaarden 2021
