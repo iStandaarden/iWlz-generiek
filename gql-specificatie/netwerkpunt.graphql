@@ -1,180 +1,110 @@
 """ 
-  Graphql Schemadefinitie tbv interactie met het netwerkpunt.
-  Versie 0.0.2
+  Graphql Schemadefinitie voor generieke componenten.
+  Versie 0.2
 
   contact:
     name: "iStandaarden"
     url: "https://istandaarden.nl"
     email: info@istandaarden.nl
 """
-scalar UUID
-scalar Date
-scalar Time
+
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122") # version 4
+scalar Date @specifiedBy(url: "https://scalars.graphql.org/andimarek/local-date") # YYYY-MM-DD
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+https://en.wikipedia.org/wiki/ISO_8601
+"""
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time")
+
 
 schema {
-  query: Query
   mutation: Mutation
-}
-
-"""
-  Queries
-"""
-type Query {
-    # Abonnement callback
-    abonnementCallback($xRequestID: xRequestID!): Abonnement!
-
-    # Abonnement ophalen met ID
-    getAbonnement($id: abonnementId!): Abonnement!
-
-    # notificatie
-    getNotificatie($xOrgKey: xOrgKey!, $xRequestID: xRequestID!): Abonnement!
-
-    # consent(s) ophalen 
-    getConsent($xRequestID: String!, $Scope: scope, $onderwerp: onderwerp, $wettelijkeGrondslag: wettelijkeGrondslag, $afgiftedatumBegin: Time, $afgiftedatumEind: Time, $vervaldatumBegin: Time, $vervaldatumEind: Time): Consent!
-
-    # metadata ophalen - Raadplegen metadata van het netwerkpunt
-    getMetadata: metadata!
 }
 
 """
   Mutaties
 """
 type Mutation {
-    # Abonnement aanmaken
-    createAbonnement(input: CreateAbonnement!): CreateAbonnementResponse!
-
-    # Abonnement delete
-    deleteAbonnement(input: DeleteAbonnement!): DeleteAbonnementResponse!
-
-    # AbonnementType aanbieden
-    createAbonnementType(input: AbonnementType!): CreateAbonnementTypeResponse!
+  zendNotificatie(notificatieInput: NotificatieInput!): Notificatie!
+  zendMelding(meldingInput: MeldingInput!): Melding!
 }
 
 """
   Objects
 """
-# Abonnement
-type Abonnement {
-    abonnementId: UUID! # AbonnementID
-    organisatieId: String! #identificatie van de organisatie
-    abonnementType: String! # voor welke type abonnement is gezet
-    idType: idType! # type identificatie
-    id: String! # identificatie van het object waar het abonnement op is geplaatst
-    createdAt: Time! 
-    updatedAt: Time!
-    deletedAt: Time
+input NotificatieInput {
+  timestamp: DateTime!
+  afzenderIDType: String!
+  afzenderID: String!
+  ontvangerIDType: String!
+  ontvangerID: String!
+  ontvangerKenmerk: String
+  eventType: String!
+  subjectList: [SubjectEntity!]!
 }
 
-type CreateAbonnementResponse {
-  abonnementID: UUID!
+input MeldingInput {
+  timestamp: DateTime!
+  afzenderIDType: String!
+  afzenderID: String!
+  ontvangerIDType: String!
+  ontvangerID: String!
+  ontvangerKenmerk: String
+  eventType: String!
+  subjectList: [SubjectEntity!]!
 }
 
-type DeleteAbonnementResponse {
-  responseCode: deleteResponse!
+type Notificatie implements Message {
+  notificatieID: UUID!
+  timestamp: DateTime!
+  afzenderIDType: IDTypeEnum!
+  afzenderID: String!
+  ontvangerIDType: IDTypeEnum!
+  ontvangerID: String!
+  ontvangerKenmerk: String
+  eventType: String!
+  subjectList: [SubjectEntity!]!
+  
 }
 
-input CreateAbonnement {
-    organisatieId: String! #identificatie van de organisatie
-    abonnementType: String! # type abonnenment
-    idType: idType! # type identificatie
-    id: String! # identificatie van het object waar het abonnement op is geplaatst
+type Melding implements Message {
+  meldingID: UUID!
+  timestamp: DateTime!
+  afzenderIDType: IDTypeEnum!
+  afzenderID: String!
+  ontvangerIDType: IDTypeEnum!
+  ontvangerID: String!
+  ontvangerKenmerk: String
+  eventType: String!
+  subjectList: [SubjectEntity!]!
+  
 }
 
-input DeleteAbonnement {
-    abonnementId: UUID! # AbonnementID
+interface Message {
+  timestamp: DateTime!
+  afzenderIDType: IDTypeEnum!
+  afzenderID: String!
+  ontvangerIDType: IDTypeEnum!
+  ontvangerID: String!
+  ontvangerKenmerk: String
+  eventType: String!
+  subjectList: [SubjectEntity!]!
 }
 
-type consent {
-    consentId: UUID! # Consent identificatie
-    scope: String! # Scope van de consent
-    onderwerp: String! # Onderwerp van de consent
-    wettelijkeGrondslag: String! # Wettelijke grondslag van de consent
-    afgiftedatum: Time! # Afgiftedatum consent
-    vervaldatum: Time # Vervaldatum consent
-    createdAt: Time! 
-    updatedAt: Time!
-    deletedAt: Time
+type SubjectEntity {
+  subject: String!
+  recordID: String!
 }
 
-type metadata {
-    identifier: String # De unieke identificatie van de een specifieke versie van de gegevensstandaard
-    title: String # De naam van de modelgegevensset e.g. Indicatieregister
-    description: String # Beschrijving van de modelgegevensset
-    modified: Time # De datum waarop de modelgegevensset voor het laatst is gewijzigd
-    language: String # De taal waarin de inhoud van de modelgegevensset is uitgedrukt e.g. Nederlands
-    authority: String # Overheidsorganisatie die de wettelijke verantwoordelijkheid draagt voor de inhoud (strekking) van de modelgegevensset
-    publisher: String # De beheerorganisatie die verantwoordelijk is voor de publicatie van de dataset
-    spatial: String # Geografisch gebied waar de modelgegevensset betrekking op heeft e.g. Landelijk
-    temporal: String # Periode waar de modelgegevensset betrekking op heeft
-    hasVersion: String # De versie van de modelgegevensset e.g. 1.0
-}
-
-input AbonnementType {
-    abonnementTypeId: UUID! # AbonnementID
-    organisatieId: String! #identificatie van de organisatie
-    abonnementType: String! # voor welke type abonnement is gezet
-    abonnementDescription: String! # Beschrijving van het abonnement
-    idType: idType! # Aanduiding van het type Id dat moet worden meegegeven bij het afsluiten van het abonnement. Een abonnementType kan werken op basis van meerdere idType’s.
-    eventType: EventTypeCUD! # Aanduiding welk event een notificatie geeft.
-    eventTrigger: String! # Beschrijving welke trigger zorgt voor een notificatie
-    objectIdType: String! # Beschrijving welke ObjectID wordt teruggeven in de notificatie, voor gebruik als ID in de juiste GraphQL query
-}
-
-type CreateAbonnementTypeResponse {
-  createAbonnementTypeResponse: CreateAbonnementTypeResponse!
-}
-
-"""
-Notificatie type is niet nodig want is subset van abonnement. Een select van de onderstaande kolommen uit type Abonnement zou voldoende moeten zijn
-# Notificatie
-type Notificatie {
-    xOrgKey: Int! # Uniek ID van het netwerkpunt binnen het netwerk
-    xRequestID: String! # Identificatie van het request
-    organisatieId: String! #identificatie van de organisatie
-    organisatieIdType: String! # type identificatie van de organisatie
-    timestamp: Time!
-    abonnementId: UUID!
-    eventType: [EventTypeCUD]!
-    recordId: String! # example: "https://api.ciz.nl/wlzindicatieregister/wlzindicaties/da8ebd42-d29b-4508-8604-ae7d2c6bbddd" 
-} 
-"""
 
 """
   Codelijsten - enums
 """
 
-# EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-enum EventTypeAll {
-  ALL
-  CREATE
-  UPDATE
-  DELETE
-}
-
-# EventType =- specificatie voor welke gebeurtenissen er een abonnement wordt afgesloten. all = alle gebeurtenissen / create = alleen aanmaken / update = alleen wijzigingen
-enum EventTypeCUD {
-  CREATE
-  UPDATE
-  DELETE
-}
-
-# deleteResponse = return codes voor delete abonnement
-enum deleteResponse  {
-  204 #Abonnement verwijderd
-  404 #abonnementId niet gevonden
-}
-
-# idType = Identificatietypen tbv plaatsen abonnement
-enum idType {
-  BSN
-  KvK
-  UZOVI
+enum IDTypeEnum {
   AGB
+  BSN
+  KVK
   OIN
-  ObjectId
-}
-
-enum createAbonnementTypeResponse {
-  204 #AbonnementType geaccepteerd
-  400 #AbonnementType bestaat al
+  UZOVI
 }
