@@ -34,9 +34,9 @@ type Mutation {
 """
 input NotificatieInput {
   timestamp: DateTime!
-  afzenderIDType: IDTypeEnum!
+  afzenderIDType: String!
   afzenderID: String!
-  ontvangerIDType: IDTypeEnum!
+  ontvangerIDType: String!
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
@@ -45,9 +45,9 @@ input NotificatieInput {
 
 input MeldingInput {
   timestamp: DateTime!
-  afzenderIDType: IDTypeEnum!
+  afzenderIDType: String!
   afzenderID: String!
-  ontvangerIDType: IDTypeEnum!
+  ontvangerIDType: String!
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
