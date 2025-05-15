@@ -40,7 +40,7 @@ input NotificatieInput {
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
-  subjectList: [SubjectEntity!]!
+  subjectList: [SubjectEntityInput!]!
 }
 
 input MeldingInput {
@@ -51,7 +51,7 @@ input MeldingInput {
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
-  subjectList: [SubjectEntity!]!
+  subjectList: [SubjectEntityInput!]!
 }
 
 type Notificatie implements Message {
@@ -96,6 +96,10 @@ type SubjectEntity {
   recordID: String!
 }
 
+input SubjectEntityInput {
+  subject: String!
+  recordID: String!
+}
 
 """
   Codelijsten - enums
