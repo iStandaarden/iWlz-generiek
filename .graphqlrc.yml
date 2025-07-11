@@ -1,2 +1,2 @@
 schema: 'gql-specificatie/netwerkpunt.graphql'
-documents: 'gql-query/**/*.graphql'
+documents: 'example/*.graphql'

@@ -1,0 +1,23 @@
+mutation zendNotificatie(
+  $afzenderID: String!
+  $afzenderIDType: IDTypeEnum!
+  $eventType: String!
+  $ontvangerID: String!
+  $ontvangerIDType: IDTypeEnum!
+  $timestamp: DateTime!
+  $subjectList: [SubjectEntityInput!]!
+) {
+  zendNotificatie(
+    notificatieInput: {
+      afzenderID: $afzenderID
+      afzenderIDType: $afzenderIDType
+      eventType: $eventType
+      ontvangerID: $ontvangerID
+      ontvangerIDType: $ontvangerIDType
+      timestamp: $timestamp
+      subjectList: $subjectList
+    }
+  ) {
+    notificatieID
+  }
+}
