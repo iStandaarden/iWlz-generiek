@@ -1,0 +1,25 @@
+mutation zendMelding(
+  $timestamp: DateTime!
+  $afzenderIDType: IDTypeEnum!
+  $afzenderID: String!
+  $ontvangerIDType: IDTypeEnum!
+  $ontvangerID: String!
+  $ontvangerKenmerk: String
+  $eventType: String!
+  $subjectList: [SubjectEntityInput!]!
+) {
+  zendMelding(
+    meldingInput: {
+      timestamp: $timestamp
+      afzenderIDType: $afzenderIDType
+      afzenderID: $afzenderID
+      ontvangerIDType: $ontvangerIDType
+      ontvangerID: $ontvangerID
+      ontvangerKenmerk: $ontvangerKenmerk
+      eventType: $eventType
+      subjectList: $subjectList
+    }
+  ) {
+    meldingID
+  }
+}

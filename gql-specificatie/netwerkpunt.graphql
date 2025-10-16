@@ -1,12 +1,19 @@
 """ 
   Graphql Schemadefinitie voor generieke componenten.
-  Versie 0.2
+  Versie 1.1
 
   contact:
     name: "iStandaarden"
     url: "https://istandaarden.nl"
     email: info@istandaarden.nl
 """
+
+directive @specifiedBy(
+"""
+The URL that specifies the behavior of this scalar.
+"""
+url: String!
+) on SCALAR
 
 scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122") # version 4
 scalar Date @specifiedBy(url: "https://scalars.graphql.org/andimarek/local-date") # YYYY-MM-DD
@@ -16,9 +23,16 @@ https://en.wikipedia.org/wiki/ISO_8601
 """
 scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time")
 
-
 schema {
+  query: Query
   mutation: Mutation
+}
+
+"""
+  Dummy query (query root operation type must be provided)
+"""
+type Query {
+  _empty: String
 }
 
 """
@@ -34,24 +48,29 @@ type Mutation {
 """
 input NotificatieInput {
   timestamp: DateTime!
-  afzenderIDType: String!
+  afzenderIDType: IDTypeEnum!
   afzenderID: String!
-  ontvangerIDType: String!
+  ontvangerIDType: IDTypeEnum!
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
-  subjectList: [SubjectEntity!]!
+  subjectList: [SubjectEntityInput!]!
 }
 
 input MeldingInput {
   timestamp: DateTime!
-  afzenderIDType: String!
+  afzenderIDType: IDTypeEnum!
   afzenderID: String!
-  ontvangerIDType: String!
+  ontvangerIDType: IDTypeEnum!
   ontvangerID: String!
   ontvangerKenmerk: String
   eventType: String!
-  subjectList: [SubjectEntity!]!
+  subjectList: [SubjectEntityInput!]!
+}
+
+input SubjectEntityInput {
+  subject: String!
+  recordID: String!
 }
 
 type Notificatie implements Message {
@@ -95,7 +114,6 @@ type SubjectEntity {
   subject: String!
   recordID: String!
 }
-
 
 """
   Codelijsten - enums
